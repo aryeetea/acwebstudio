@@ -97,28 +97,29 @@ export default function Team() {
                     }}
                   />
                   <div style={{ position: 'relative', padding: '42px 34px 34px' }}>
-                  <div style={{ fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.72)', marginBottom: 10 }}>
-                    {member.role}
-                  </div>
-                  <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(30px,3vw,42px)', lineHeight: 1.05, marginBottom: 16 }}>
-                    {member.name}
-                  </h2>
-                  <p style={{ fontSize: 15, lineHeight: 1.8, color: 'rgba(255,255,255,0.82)', fontWeight: 300 }}>
-                    {member.name === 'Aileen Aryeetey'
-                      ? 'Leading the build, the communication, and the full delivery of every project.'
-                      : 'Shaping the visual direction so every website feels intentional before a single line of code is written.'}
-                  </p>
-                  <div style={{ marginTop: 28 }}>
-                    <div style={{ fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.72)', marginBottom: 12 }}>
-                      Focus Areas
+                    <div style={{ fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.72)', marginBottom: 10 }}>
+                      {member.role}
                     </div>
-                    <div style={{ display: 'grid', gap: 10 }}>
-                      {member.responsibilities.map(item => (
-                        <div key={item} style={{ display: 'flex', gap: 10, fontSize: 14, lineHeight: 1.6, color: 'rgba(255,255,255,0.84)' }}>
-                          <span style={{ color: 'rgba(255,255,255,0.9)' }}>•</span>
-                          <span>{item}</span>
-                        </div>
-                      ))}
+                    <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(30px,3vw,42px)', lineHeight: 1.05, marginBottom: 16 }}>
+                      {member.name}
+                    </h2>
+                    <p style={{ fontSize: 15, lineHeight: 1.8, color: 'rgba(255,255,255,0.82)', fontWeight: 300 }}>
+                      {member.name === 'Aileen Aryeetey'
+                        ? 'Leading the build, the communication, and the full delivery of every project.'
+                        : 'Shaping the visual direction so every website feels intentional before a single line of code is written.'}
+                    </p>
+                    <div style={{ marginTop: 28 }}>
+                      <div style={{ fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.72)', marginBottom: 12 }}>
+                        Focus Areas
+                      </div>
+                      <div style={{ display: 'grid', gap: 10 }}>
+                        {member.responsibilities.map(item => (
+                          <div key={item} style={{ display: 'flex', gap: 10, fontSize: 14, lineHeight: 1.6, color: 'rgba(255,255,255,0.84)' }}>
+                            <span style={{ color: 'rgba(255,255,255,0.9)' }}>•</span>
+                            <span>{item}</span>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
