@@ -11,11 +11,11 @@
   --brown-pale: #EDE5D8;
   --gray: #6B6861;
   --gray-light: #D8D4CC;
-  --accent-strong: #C47B46;
-  --accent-soft: #F5E8DE;
+  --accent-strong: #B72F64;
+  --accent-soft: #F9DBE8;
   --surface-dark: #111110;
   --surface-dark-soft: #2A211C;
-  --hero-glow: rgba(196, 168, 130, 0.24);
+  --hero-glow: rgba(214, 65, 122, 0.22);
 }
 
 html { scroll-behavior: smooth; }

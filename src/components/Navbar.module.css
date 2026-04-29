@@ -14,16 +14,9 @@
   font-size: 22px; font-weight: 600; color: var(--black);
 }
 .logo span { color: var(--brown); }
-.links { display: flex; gap: 32px; list-style: none; }
+.links { display: flex; gap: 24px; list-style: none; align-items: center; }
 .links a { color: var(--gray); font-size: 14px; letter-spacing: 0.04em; transition: color 0.2s; }
 .links a:hover, .links a.active { color: var(--black); }
-.cta {
-  background: linear-gradient(135deg, var(--black), var(--brown)) !important; color: var(--white) !important;
-  padding: 10px 22px; border-radius: 999px;
-  font-size: 13px !important; letter-spacing: 0.06em !important;
-  box-shadow: 0 14px 26px rgba(31, 23, 38, 0.12);
-}
-.cta:hover { filter: saturate(1.08); }
 .hamburger {
   display: none; flex-direction: column; gap: 5px;
   background: none; border: none; cursor: pointer; padding: 4px;

@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
@@ -7,25 +6,21 @@ import About from './pages/About'
 import Services from './pages/Services'
 import Portfolio from './pages/Portfolio'
 import Contact from './pages/Contact'
-import { defaultThemeId, themes } from './theme'
+import Faq from './pages/Faq'
+import Team from './pages/Team'
+import { roseNoirTheme } from './theme'
 
 export default function App() {
-  const [themeId, setThemeId] = useState(() => localStorage.getItem('web-by-leen-theme') || defaultThemeId)
-
-  useEffect(() => {
-    localStorage.setItem('web-by-leen-theme', themeId)
-  }, [themeId])
-
-  const theme = themes[themeId] || themes[defaultThemeId]
-
   return (
-    <div style={{ ...theme.colors, minHeight: '100vh', background: 'var(--cream)' }}>
+    <div style={{ ...roseNoirTheme.colors, minHeight: '100vh', background: 'var(--cream)' }}>
       <Navbar />
       <Routes>
-        <Route path="/"          element={<Home activeTheme={themeId} onThemeChange={setThemeId} />} />
+        <Route path="/"          element={<Home />} />
         <Route path="/about"     element={<About />} />
         <Route path="/services"  element={<Services />} />
         <Route path="/portfolio" element={<Portfolio />} />
+        <Route path="/team"      element={<Team />} />
+        <Route path="/faq"       element={<Faq />} />
         <Route path="/contact"   element={<Contact />} />
       </Routes>
       <Footer />

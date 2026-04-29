@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import PortraitCard from '../components/PortraitCard'
-import ThemeSwitcher from '../components/ThemeSwitcher'
+import { faqs } from '../data/faqs'
 
 const services = [
   {
@@ -52,26 +52,7 @@ const portfolioPreviews = [
   },
 ]
 
-const faqs = [
-  {
-    q: 'How long does a website take?',
-    a: 'Basic sites take 3–5 days. Standard packages take 7–14 days. Premium builds are 2–4 weeks. Rush delivery is available as an add-on.',
-  },
-  {
-    q: 'Do you offer revisions?',
-    a: 'Yes — every package includes revisions. Basic includes 2, Standard 3, and Premium 5. Additional revision rounds can be purchased as an add-on.',
-  },
-  {
-    q: 'Do I need to provide content?',
-    a: 'For the best results, yes. Providing your own copy, images, and brand assets ensures the site is truly yours.',
-  },
-  {
-    q: 'How does payment work?',
-    a: 'A 50% deposit is required to begin. The remaining 50% is due on completion. Payments accepted via Fiverr, PayPal, or bank transfer.',
-  },
-]
-
-export default function Home({ activeTheme, onThemeChange }) {
+export default function Home() {
   const [openFaq, setOpenFaq] = useState(0)
 
   return (
@@ -87,10 +68,10 @@ export default function Home({ activeTheme, onThemeChange }) {
               <div className="fade-in delay-2" style={{ marginBottom: 26 }}>
                 <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '8px 14px', borderRadius: 999, background: 'var(--white)', border: '1px solid var(--brown-pale)', marginBottom: 22, boxShadow: '0 12px 28px rgba(31, 23, 38, 0.06)' }}>
                   <span style={{ width: 10, height: 10, borderRadius: '50%', background: 'var(--accent-strong)', boxShadow: '0 0 0 6px var(--accent-soft)' }} />
-                  <span style={{ fontSize: 12, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--gray)' }}>Choose your vibe below</span>
+                  <span style={{ fontSize: 12, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--gray)' }}>Rose Noir Studio</span>
                 </div>
                 <h1 style={{ fontSize: 'clamp(40px,6vw,80px)', maxWidth: 820, marginBottom: 28, lineHeight: 1.02 }}>
-                  Web By Leen now feels
+                  AC Web Studio now feels
                   <br />
                   <em style={{ fontStyle: 'italic', color: 'var(--brown)' }}>more personal, more alive</em>
                   <br />
@@ -98,12 +79,9 @@ export default function Home({ activeTheme, onThemeChange }) {
                 </h1>
               </div>
               <p className="fade-in delay-3" style={{ fontSize: 17, color: 'var(--gray)', maxWidth: 560, marginBottom: 32, fontWeight: 300, lineHeight: 1.8 }}>
-                Custom-coded from scratch. Design-first. Built to convert. Pick the color direction that feels most like you, and the entire site updates with it.
+                Custom-coded from scratch. Design-first. Built to convert. Every page stays grounded in the same Rose Noir direction for a polished, consistent brand feel.
               </p>
-              <div className="fade-in delay-3" style={{ marginBottom: 38 }}>
-                <ThemeSwitcher activeTheme={activeTheme} onThemeChange={onThemeChange} />
-              </div>
-              <div className="fade-in delay-4" style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+              <div className="fade-in delay-4" style={{ display: 'flex', gap: 16, flexWrap: 'wrap', marginTop: 38 }}>
                 <Link to="/services" className="btn-primary">Shop Packages</Link>
                 <Link to="/portfolio" className="btn-outline">View Work</Link>
               </div>
@@ -142,7 +120,7 @@ export default function Home({ activeTheme, onThemeChange }) {
             </div>
           </div>
           <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: 17, lineHeight: 1.9, fontWeight: 300 }}>
-            Web By Leen creates websites from scratch — no page builders, no bloated templates. Each site is thoughtfully designed to reflect your brand and built to perform. Whether you're a solo creative, a small business, or a growing brand, there's a package built for you.
+            AC Web Studio creates websites from scratch — no page builders, no bloated templates. Each site is thoughtfully designed to reflect your brand and built to perform. Whether you're a solo creative, a small business, or a growing brand, there's a package built for you.
           </p>
         </div>
       </div>
@@ -252,12 +230,17 @@ export default function Home({ activeTheme, onThemeChange }) {
             <p style={{ fontSize: 15, color: 'var(--gray)', fontWeight: 300, lineHeight: 1.8 }}>
               Still have questions? Feel free to reach out directly.
             </p>
-            <Link to="/contact" className="btn-primary" style={{ marginTop: 32, display: 'inline-block' }}>
-              Get in Touch
-            </Link>
+            <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', marginTop: 32 }}>
+              <Link to="/faq" className="btn-outline">
+                View Full FAQ
+              </Link>
+              <Link to="/contact" className="btn-primary">
+                Get in Touch
+              </Link>
+            </div>
           </div>
           <div>
-            {faqs.map((f, i) => (
+            {faqs.slice(0, 4).map((f, i) => (
               <div key={i} style={{ borderBottom: '1px solid var(--brown-pale)' }}>
                 <div
                   onClick={() => setOpenFaq(openFaq === i ? -1 : i)}

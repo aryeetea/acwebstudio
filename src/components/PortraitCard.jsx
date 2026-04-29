@@ -38,7 +38,7 @@ export default function PortraitCard() {
         {!hasImageError ? (
           <img
             src="/leen-portrait.jpeg"
-            alt="Portrait of Leen"
+            alt="Portrait of the AC Web Studio team lead"
             onError={() => setHasImageError(true)}
             style={{
               width: '100%',
@@ -81,13 +81,13 @@ export default function PortraitCard() {
           }}
         >
           <div style={{ fontSize: 11, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.72)', marginBottom: 8 }}>
-            Meet Leen
+            Meet the Team
           </div>
           <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 28, lineHeight: 1.05, marginBottom: 8 }}>
             Creative direction with personality
           </div>
           <p style={{ fontSize: 13, lineHeight: 1.65, color: 'rgba(255,255,255,0.78)' }}>
-            Web By Leen should feel warm, memorable, and unmistakably yours from the very first scroll.
+            AC Web Studio should feel warm, memorable, and unmistakably yours from the very first scroll.
           </p>
         </div>
       </div>

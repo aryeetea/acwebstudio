@@ -25,7 +25,7 @@ export default function About() {
       <div style={{ padding: '140px 5% 80px', background: 'linear-gradient(180deg, var(--cream), var(--white))', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', top: 0, left: '-5%', width: 500, height: 500, borderRadius: '50%', background: 'radial-gradient(circle, var(--hero-glow) 0%, transparent 70%)', opacity: 1, pointerEvents: 'none' }} />
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <div className="section-label fade-in delay-1">About Web By Leen</div>
+          <div className="section-label fade-in delay-1">About AC Web Studio</div>
           <h1 className="fade-in delay-2" style={{ fontSize: 'clamp(40px,5.5vw,76px)', maxWidth: 760, lineHeight: 1.08, marginBottom: 28 }}>
             Built on craft,<br />
             <em style={{ fontStyle: 'italic', color: 'var(--brown)' }}>driven by results</em>
@@ -58,8 +58,8 @@ export default function About() {
           {/* RIGHT — Story */}
           <div>
             <p style={{ fontSize: 18, color: 'var(--gray)', lineHeight: 1.9, fontWeight: 300, marginBottom: 24 }}>
-              Hi — I'm Leen, the designer and developer behind{' '}
-              <strong style={{ color: 'var(--black)', fontWeight: 500 }}>Web By Leen</strong>. I started this brand with one belief: that every business, regardless of size, deserves a website that genuinely reflects who they are.
+              Hi — we're the team behind{' '}
+              <strong style={{ color: 'var(--black)', fontWeight: 500 }}>AC Web Studio</strong>. We built this studio on one belief: that every business, regardless of size, deserves a website that genuinely reflects who they are.
             </p>
             <p style={{ fontSize: 18, color: 'var(--gray)', lineHeight: 1.9, fontWeight: 300, marginBottom: 24 }}>
               I don't use templates or drag-and-drop builders. Every project is written and designed{' '}
@@ -71,7 +71,7 @@ export default function About() {
             </p>
             <p style={{ fontSize: 18, color: 'var(--gray)', lineHeight: 1.9, fontWeight: 300, marginBottom: 48 }}>
               Whether you're a freelancer building your first portfolio, a small business ready to level up, or an established brand seeking something polished and premium —{' '}
-              <strong style={{ color: 'var(--black)', fontWeight: 500 }}>Web By Leen is built to meet you there</strong>.
+              <strong style={{ color: 'var(--black)', fontWeight: 500 }}>AC Web Studio is built to meet you there</strong>.
             </p>
 
             {/* VALUES */}

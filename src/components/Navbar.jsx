@@ -7,6 +7,9 @@ const links = [
   { to: '/about',     label: 'About' },
   { to: '/services',  label: 'Services' },
   { to: '/portfolio', label: 'Portfolio' },
+  { to: '/team',      label: 'Team' },
+  { to: '/faq',       label: 'FAQ' },
+  { to: '/contact',   label: 'Contact' },
 ]
 
 export default function Navbar() {
@@ -17,7 +20,7 @@ export default function Navbar() {
     <nav className={styles.nav}>
       <div className={styles.inner}>
         <Link to="/" className={styles.logo}>
-          Web By <span>Leen</span>
+          AC Web <span>Studio</span>
         </Link>
         <ul className={styles.links}>
           {links.map(l => (
@@ -27,9 +30,6 @@ export default function Navbar() {
               </Link>
             </li>
           ))}
-          <li>
-            <Link to="/services" className={styles.cta}>Shop Packages</Link>
-          </li>
         </ul>
         <button className={styles.hamburger} onClick={() => setOpen(!open)}>
           <span /><span /><span />
@@ -37,7 +37,7 @@ export default function Navbar() {
       </div>
       {open && (
         <div className={styles.mobile}>
-          {[...links, { to: '/contact', label: 'Contact' }].map(l => (
+          {links.map(l => (
             <Link key={l.to} to={l.to} onClick={() => setOpen(false)}>{l.label}</Link>
           ))}
         </div>

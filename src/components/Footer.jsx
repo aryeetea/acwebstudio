@@ -7,7 +7,7 @@ export default function Footer() {
       <div className={styles.inner}>
         <div className={styles.top}>
           <div className={styles.brand}>
-            <Link to="/" className={styles.logo}>Web By <span>Leen</span></Link>
+            <Link to="/" className={styles.logo}>AC Web <span>Studio</span></Link>
             <p>Custom websites built from scratch, designed to elevate your brand and convert visitors into clients.</p>
           </div>
           <div className={styles.col}>
@@ -16,6 +16,8 @@ export default function Footer() {
             <Link to="/about">About</Link>
             <Link to="/services">Services</Link>
             <Link to="/portfolio">Portfolio</Link>
+            <Link to="/team">Meet the Team</Link>
+            <Link to="/faq">FAQ</Link>
             <Link to="/contact">Contact</Link>
           </div>
           <div className={styles.col}>
@@ -28,11 +30,11 @@ export default function Footer() {
             <h4>Connect</h4>
             <a href="https://fiverr.com/yourprofile" target="_blank" rel="noreferrer">Fiverr</a>
             <a href="https://instagram.com" target="_blank" rel="noreferrer">Instagram</a>
-            <a href="mailto:hello@webbyleen.com">Email</a>
+            <a href="mailto:hello@acwebstudio.com">Email</a>
           </div>
         </div>
         <div className={styles.bottom}>
-          <p>© 2025 Web By Leen. All rights reserved.</p>
+          <p>© 2025 AC Web Studio. All rights reserved.</p>
           <p>Custom websites, crafted with care.</p>
         </div>
       </div>

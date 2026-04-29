@@ -1,15 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { packageMap, packageOptions, packages } from '../data/packages'
-
-const faqs = [
-  { q: 'How long does a website take?', a: 'Basic sites take 3–5 days. Standard packages take 7–14 days. Premium builds are 2–4 weeks. Rush delivery is available as an add-on for all packages.' },
-  { q: 'Do you offer revisions?', a: 'Yes — Basic includes 2, Standard includes 3, and Premium includes 5 revision rounds. Additional rounds can be purchased as an add-on.' },
-  { q: 'Do I need to provide content?', a: 'For the best results, yes. Providing your own copy, images, and brand assets ensures the site is truly yours. Placeholder content can be used initially.' },
-  { q: 'How does payment work?', a: 'A 50% deposit is required to begin. The remaining 50% is due upon completion before final files are handed over. Payments accepted via Fiverr, PayPal, or bank transfer.' },
-  { q: 'What do you need from me to get started?', a: 'Just a brief description of your project, your budget range, and any inspiration or references you love. We\'ll take it from there.' },
-  { q: 'Can you host my website too?', a: 'I deliver clean, deployment-ready files. I can guide you through hosting on Netlify, Vercel, or any provider — it\'s simpler than you think and usually free.' },
-]
+import { faqs } from '../data/faqs'
 
 const inputStyle = {
   width: '100%',
@@ -257,7 +249,7 @@ export default function Contact() {
                       name="businessName"
                       value={form.businessName}
                       onChange={handleChange}
-                      placeholder="Web By Leen"
+                      placeholder="AC Web Studio"
                       required
                       style={inputStyle}
                       onFocus={e => e.target.style.borderColor = 'var(--brown)'}
@@ -378,6 +370,9 @@ export default function Contact() {
           <p style={{ fontSize: 16, color: 'var(--gray)', fontWeight: 300, maxWidth: 520, marginBottom: 56, lineHeight: 1.8 }}>
             Here are answers to the questions I get asked most often.
           </p>
+          <Link to="/faq" className="btn-outline" style={{ marginBottom: 36, display: 'inline-block' }}>
+            Visit Full FAQ Page
+          </Link>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(440px, 1fr))', gap: '0 60px' }}>
             {faqs.map((f, i) => (
