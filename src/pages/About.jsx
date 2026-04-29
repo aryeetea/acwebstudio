@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import PortraitCard from '../components/PortraitCard'
 
 const values = [
   { name: 'Custom Builds', desc: 'No templates. Every site is written from scratch, tailored entirely to you.' },
@@ -24,28 +23,26 @@ export default function About() {
       {/* HERO */}
       <div style={{ padding: '140px 5% 80px', background: 'linear-gradient(180deg, var(--cream), var(--white))', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', top: 0, left: '-5%', width: 500, height: 500, borderRadius: '50%', background: 'radial-gradient(circle, var(--hero-glow) 0%, transparent 70%)', opacity: 1, pointerEvents: 'none' }} />
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+        <div className="page-shell">
           <div className="section-label fade-in delay-1">About AC Web Studio</div>
           <h1 className="fade-in delay-2" style={{ fontSize: 'clamp(40px,5.5vw,76px)', maxWidth: 760, lineHeight: 1.08, marginBottom: 28 }}>
             Built on craft,<br />
             <em style={{ fontStyle: 'italic', color: 'var(--brown)' }}>driven by results</em>
           </h1>
           <p className="fade-in delay-3" style={{ fontSize: 18, color: 'var(--gray)', maxWidth: 560, fontWeight: 300, lineHeight: 1.85 }}>
-            A one-person studio dedicated to building websites that are as thoughtful as they are beautiful — custom-coded, design-first, and built to last.
+            A small creative studio building websites that are as thoughtful as they are beautiful, custom-coded from scratch and designed to support real business growth.
           </p>
         </div>
       </div>
 
       {/* MAIN ABOUT */}
       <section style={{ padding: '100px 5%' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1.3fr', gap: 100, alignItems: 'start' }}>
+        <div className="page-shell layout-sidebar">
 
           {/* LEFT — Visual */}
           <div style={{ position: 'sticky', top: 100 }}>
-            <PortraitCard />
-
             {/* Mini stats */}
-            <div style={{ marginTop: 24, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+            <div style={{ marginTop: 24, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 12 }}>
               {[['100%', 'Custom built'], ['24h', 'Avg. response'], ['5★', 'Client rating'], ['∞', 'Possibilities']].map(([n, l]) => (
                 <div key={l} style={{ background: 'var(--white)', border: '1px solid var(--brown-pale)', borderRadius: 4, padding: '16px 18px' }}>
                   <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 30, color: 'var(--black)', lineHeight: 1 }}>{n}</div>
@@ -62,12 +59,12 @@ export default function About() {
               <strong style={{ color: 'var(--black)', fontWeight: 500 }}>AC Web Studio</strong>. We built this studio on one belief: that every business, regardless of size, deserves a website that genuinely reflects who they are.
             </p>
             <p style={{ fontSize: 18, color: 'var(--gray)', lineHeight: 1.9, fontWeight: 300, marginBottom: 24 }}>
-              I don't use templates or drag-and-drop builders. Every project is written and designed{' '}
+              We do not use templates or drag-and-drop builders. Every project is written and designed{' '}
               <strong style={{ color: 'var(--black)', fontWeight: 500 }}>from scratch</strong>, with full attention to the details that make a site memorable — the typography, the spacing, the micro-interactions, the way a page breathes.
             </p>
             <p style={{ fontSize: 18, color: 'var(--gray)', lineHeight: 1.9, fontWeight: 300, marginBottom: 24 }}>
-              My approach is{' '}
-              <strong style={{ color: 'var(--black)', fontWeight: 500 }}>design-first</strong>. Before a single line of code is written, I think about who the user is, what they need to feel, and what action they should take. Good design and good development aren't separate — they're the same thing done well.
+              Our approach is{' '}
+              <strong style={{ color: 'var(--black)', fontWeight: 500 }}>design-first</strong>. Before a single line of code is written, we think about who the user is, what they need to feel, and what action they should take. Good design and good development are not separate — they work best together.
             </p>
             <p style={{ fontSize: 18, color: 'var(--gray)', lineHeight: 1.9, fontWeight: 300, marginBottom: 48 }}>
               Whether you're a freelancer building your first portfolio, a small business ready to level up, or an established brand seeking something polished and premium —{' '}
@@ -76,8 +73,8 @@ export default function About() {
 
             {/* VALUES */}
             <div style={{ borderTop: '1px solid var(--brown-pale)', paddingTop: 48, marginBottom: 48 }}>
-              <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 28, color: 'var(--black)', marginBottom: 32 }}>What I stand for</h3>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
+              <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 28, color: 'var(--black)', marginBottom: 32 }}>What we stand for</h3>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 24 }}>
                 {values.map(v => (
                   <div key={v.name} style={{ borderLeft: '2px solid var(--brown-pale)', paddingLeft: 20 }}>
                     <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 20, color: 'var(--black)', marginBottom: 6 }}>{v.name}</div>
@@ -97,7 +94,7 @@ export default function About() {
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
             <span style={{ width: 24, height: 1, background: 'var(--brown)', display: 'block' }} />
-            <span style={{ fontSize: 12, letterSpacing: '0.14em', color: 'var(--brown)', textTransform: 'uppercase' }}>How I Work</span>
+            <span style={{ fontSize: 12, letterSpacing: '0.14em', color: 'var(--brown)', textTransform: 'uppercase' }}>How We Work</span>
           </div>
           <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(30px,4vw,52px)', color: '#fff', marginBottom: 64, maxWidth: 480, lineHeight: 1.15 }}>
             A process built for{' '}
@@ -121,7 +118,7 @@ export default function About() {
           Let's build something great together
         </h2>
         <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: 17, marginBottom: 40, fontWeight: 300 }}>
-          Reach out and tell me about your project. I'd love to hear from you.
+          Reach out and tell us about your project. We'd love to hear what you're building.
         </p>
         <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
           <Link to="/contact" className="btn-primary" style={{ background: '#fff', color: 'var(--brown)' }}>Start a Project</Link>

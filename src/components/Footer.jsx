@@ -13,10 +13,10 @@ export default function Footer() {
           <div className={styles.col}>
             <h4>Navigation</h4>
             <Link to="/">Home</Link>
-            <Link to="/about">About</Link>
+            <Link to="/about">About Us</Link>
             <Link to="/services">Services</Link>
-            <Link to="/portfolio">Portfolio</Link>
-            <Link to="/team">Meet the Team</Link>
+            {/* Portfolio link removed */}
+            {/* Team link removed, merged into About Us */}
             <Link to="/faq">FAQ</Link>
             <Link to="/contact">Contact</Link>
           </div>
@@ -28,8 +28,8 @@ export default function Footer() {
           </div>
           <div className={styles.col}>
             <h4>Connect</h4>
-            <a href="https://fiverr.com/yourprofile" target="_blank" rel="noreferrer">Fiverr</a>
-            <a href="https://instagram.com" target="_blank" rel="noreferrer">Instagram</a>
+            <Link to="/contact">Start a Project</Link>
+            <Link to="/faq">FAQ</Link>
             <a href="mailto:hello@acwebstudio.com">Email</a>
           </div>
         </div>

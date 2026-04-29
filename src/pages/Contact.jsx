@@ -89,21 +89,21 @@ export default function Contact() {
       {/* HERO */}
       <div style={{ padding: '140px 5% 80px', background: 'var(--cream)', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', bottom: '-10%', left: '-5%', width: 500, height: 500, borderRadius: '50%', background: 'radial-gradient(circle, var(--brown-pale) 0%, transparent 70%)', opacity: 0.35, pointerEvents: 'none' }} />
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+        <div className="page-shell">
           <div className="section-label fade-in delay-1">Place Your Order</div>
           <h1 className="fade-in delay-2" style={{ fontSize: 'clamp(40px,5.5vw,76px)', maxWidth: 680, lineHeight: 1.08, marginBottom: 28 }}>
             Order your<br />
             <em style={{ fontStyle: 'italic', color: 'var(--brown)' }}>website package</em>
           </h1>
           <p className="fade-in delay-3" style={{ fontSize: 18, color: 'var(--gray)', maxWidth: 520, fontWeight: 300, lineHeight: 1.85 }}>
-            Choose your package, add any extras, and send your order details. I'll confirm the deposit, timeline, and next steps within 24 hours.
+            Choose your package, add any extras, and send your project details. We will confirm the deposit, timeline, and next steps within 24 hours.
           </p>
         </div>
       </div>
 
       {/* CONTACT LAYOUT */}
       <section style={{ padding: '100px 5%', background: 'var(--white)' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1.4fr', gap: 80, alignItems: 'start' }}>
+        <div className="page-shell layout-sidebar">
 
           {/* LEFT — Info */}
           <div>
@@ -111,7 +111,7 @@ export default function Contact() {
               Your order at a glance
             </h2>
             <p style={{ fontSize: 16, color: 'var(--gray)', lineHeight: 1.85, fontWeight: 300, marginBottom: 36 }}>
-              This page now works like a simple storefront: pick a package, personalize it, and send everything in one order.
+              Pick a package, personalize it, and send everything in one place. We review each inquiry personally before confirming scope and timeline.
             </p>
 
             <div style={{ background: 'var(--white)', border: '1px solid var(--brown-pale)', borderRadius: 24, padding: '24px 22px', marginBottom: 24, boxShadow: '0 16px 30px rgba(31,23,38,0.06)' }}>
@@ -164,20 +164,9 @@ export default function Contact() {
               </div>
             ))}
 
-            {/* Fiverr button */}
-            <a
-              href="https://fiverr.com/yourprofile"
-              target="_blank"
-              rel="noreferrer"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: 10, background: '#1DBF73', color: '#fff', padding: '14px 24px', borderRadius: 2, fontSize: 14, fontWeight: 500, marginTop: 24, transition: 'opacity 0.2s', textDecoration: 'none' }}
-              onMouseEnter={e => e.currentTarget.style.opacity = '0.85'}
-              onMouseLeave={e => e.currentTarget.style.opacity = '1'}
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M23.004 15.588a.995.995 0 1 0 .002-1.99.995.995 0 0 0-.002 1.99zm-.996-3.705h-1.44c-1.594 0-2.053-.576-2.053-2.136V7.19h3.49V5.067h-3.49V2h-2.7v3.067H7.044c-.462 0-.854.067-1.144.362-.17.17-.29.385-.383.654-.08.24-.08.462-.08.462V5.067h-2.7v1.984H4.87c.504 0 .708.338.708.732v1.636H2v12.511h2.7v-9.85h3.49v9.85h2.7v-9.85h3.49v9.85h2.7v-9.85h2.03c.504 0 .708.338.708.732v9.118h2.7v-9.85h1.44v-1.982z"/>
-              </svg>
-              Prefer Ordering on Fiverr
-            </a>
+            <Link to="/faq" className="btn-outline" style={{ marginTop: 24 }}>
+              Review Common Questions
+            </Link>
           </div>
 
           {/* RIGHT — Form */}
@@ -187,7 +176,7 @@ export default function Contact() {
                 <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 64, color: 'var(--brown)', marginBottom: 16, lineHeight: 1 }}>✓</div>
                 <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 30, color: 'var(--black)', marginBottom: 12 }}>Order received!</h3>
                 <p style={{ fontSize: 15, color: 'var(--gray)', fontWeight: 300, lineHeight: 1.7 }}>
-                  Thanks for your order. I'll confirm your package, deposit, and timeline within 24 hours.
+                  Thanks for your request. We will confirm your package, deposit, and timeline within 24 hours.
                 </p>
               </div>
             ) : (
@@ -205,12 +194,12 @@ export default function Contact() {
                     {packageOptions.map(option => (
                       <option key={option.value} value={option.value}>{option.label}</option>
                     ))}
-                    <option value="">Custom quote instead</option>
+                    <option value="">Custom quote request</option>
                   </select>
                 </div>
 
                 {/* Name row */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 20 }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 16, marginBottom: 20 }}>
                   {[['firstName', 'First Name', 'Jane'], ['lastName', 'Last Name', 'Smith']].map(([name, label, ph]) => (
                     <div key={name}>
                       <label style={labelStyle}>{label}</label>
@@ -228,7 +217,7 @@ export default function Contact() {
                   ))}
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 20 }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 16, marginBottom: 20 }}>
                   <div>
                     <label style={labelStyle}>Email Address</label>
                     <input
@@ -362,7 +351,7 @@ export default function Contact() {
 
       {/* FAQ */}
       <section style={{ padding: '100px 5%' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+        <div className="page-shell">
           <div className="section-label">Before You Order</div>
           <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(30px,4vw,50px)', color: 'var(--black)', marginBottom: 16 }}>
             Frequently asked questions
@@ -374,7 +363,7 @@ export default function Contact() {
             Visit Full FAQ Page
           </Link>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(440px, 1fr))', gap: '0 60px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: '0 40px' }}>
             {faqs.map((f, i) => (
               <div key={i} style={{ borderBottom: '1px solid var(--brown-pale)' }}>
                 <div
@@ -415,22 +404,15 @@ export default function Contact() {
           Need something outside the packages?
         </h2>
         <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: 17, marginBottom: 40, fontWeight: 300 }}>
-          If none of the storefront packages fit, send a custom quote request instead.
+          If none of the packages fit exactly, send a custom quote request and we will recommend the best next step.
         </p>
         <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
           <Link to="/services" className="btn-outline" style={{ borderColor: 'rgba(255,255,255,0.3)', color: '#fff' }}>
             Back to Packages
           </Link>
-          <a
-            href="https://fiverr.com/yourprofile"
-            target="_blank"
-            rel="noreferrer"
-            style={{ display: 'inline-flex', alignItems: 'center', gap: 10, background: '#1DBF73', color: '#fff', padding: '15px 32px', borderRadius: 2, fontSize: 14, fontWeight: 500, textDecoration: 'none', transition: 'opacity 0.2s' }}
-            onMouseEnter={e => e.currentTarget.style.opacity = '0.85'}
-            onMouseLeave={e => e.currentTarget.style.opacity = '1'}
-          >
-            Order Through Fiverr
-          </a>
+          <Link to="/team" className="btn-primary">
+            Meet the Team
+          </Link>
         </div>
       </div>
     </>

@@ -2,12 +2,12 @@ import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Home from './pages/Home'
-import About from './pages/About'
+import AboutUs from './pages/AboutUs'
 import Services from './pages/Services'
-import Portfolio from './pages/Portfolio'
+// ...existing code...
 import Contact from './pages/Contact'
 import Faq from './pages/Faq'
-import Team from './pages/Team'
+// Team import removed
 import { roseNoirTheme } from './theme'
 
 export default function App() {
@@ -16,10 +16,10 @@ export default function App() {
       <Navbar />
       <Routes>
         <Route path="/"          element={<Home />} />
-        <Route path="/about"     element={<About />} />
+        <Route path="/about"     element={<AboutUs />} />
         <Route path="/services"  element={<Services />} />
-        <Route path="/portfolio" element={<Portfolio />} />
-        <Route path="/team"      element={<Team />} />
+        {/* Portfolio route removed */}
+        {/* Team route removed, merged into AboutUs */}
         <Route path="/faq"       element={<Faq />} />
         <Route path="/contact"   element={<Contact />} />
       </Routes>

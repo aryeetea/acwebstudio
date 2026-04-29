@@ -19,7 +19,7 @@ export default function Services() {
       {/* HERO */}
       <div style={{ padding: '140px 5% 80px', background: 'var(--cream)', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', bottom: '-20%', right: '-5%', width: 500, height: 500, borderRadius: '50%', background: 'radial-gradient(circle, var(--brown-pale) 0%, transparent 70%)', opacity: 0.4, pointerEvents: 'none' }} />
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+        <div className="page-shell">
           <div className="section-label fade-in delay-1">Services & Pricing</div>
           <h1 className="fade-in delay-2" style={{ fontSize: 'clamp(40px,5.5vw,76px)', maxWidth: 700, lineHeight: 1.08, marginBottom: 28 }}>
             Transparent pricing.<br />
@@ -33,7 +33,7 @@ export default function Services() {
 
       {/* PACKAGES */}
       <section style={{ padding: '100px 5%', background: 'var(--white)' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+        <div className="page-shell">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 24, marginBottom: 60 }}>
             {packages.map(pkg => (
               <div
@@ -51,7 +51,7 @@ export default function Services() {
                 <div style={{ padding: '32px 28px', borderBottom: '1px solid var(--brown-pale)', background: pkg.featured ? 'var(--black)' : 'transparent' }}>
                   {pkg.featured && (
                     <div style={{ display: 'inline-block', background: 'var(--brown)', color: '#fff', fontSize: 11, letterSpacing: '0.08em', padding: '4px 12px', borderRadius: 20, textTransform: 'uppercase', marginBottom: 16 }}>
-                      Most Popular
+                      Recommended
                     </div>
                   )}
                   <div style={{ fontSize: 11, letterSpacing: '0.12em', color: 'var(--brown)', textTransform: 'uppercase', marginBottom: 12 }}>
@@ -170,20 +170,11 @@ export default function Services() {
               Not sure which package is right for you?
             </h2>
             <p style={{ fontSize: 16, color: 'var(--gray)', fontWeight: 300, lineHeight: 1.8, marginBottom: 36 }}>
-              Message me with your idea and I'll recommend the best fit — no pressure, no commitment. Every project starts with a conversation.
+              Send us your project details and we will help you choose the best fit. Every project starts with a clear conversation and a practical recommendation.
             </p>
             <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
-              <Link to="/contact" className="btn-primary">Custom Quote Instead</Link>
-              <a
-                href="https://fiverr.com/yourprofile"
-                target="_blank"
-                rel="noreferrer"
-                className="btn-outline"
-                onMouseEnter={e => { e.currentTarget.style.background = 'var(--black)'; e.currentTarget.style.color = '#fff' }}
-                onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--black)' }}
-              >
-                Find Me on Fiverr
-              </a>
+              <Link to="/contact" className="btn-primary">Request a Custom Quote</Link>
+              <Link to="/team" className="btn-outline">Meet the Team</Link>
             </div>
           </div>
         </div>
@@ -195,7 +186,7 @@ export default function Services() {
           Ready to place your order?
         </h2>
         <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: 17, marginBottom: 40, fontWeight: 300 }}>
-          Choose a package, send your order details, and I'll confirm the deposit and timeline with you.
+          Choose a package, send your project details, and we will confirm the deposit, scope, and timeline with you.
         </p>
         <Link
           to="/contact"

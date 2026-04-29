@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import PortraitCard from '../components/PortraitCard'
+// PortraitCard import removed
 import { faqs } from '../data/faqs'
 
 const services = [
@@ -61,7 +61,7 @@ export default function Home() {
       <div style={{ minHeight: '92vh', display: 'flex', alignItems: 'center', padding: '140px 5% 80px', background: 'linear-gradient(180deg, var(--cream), var(--white))', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', top: '-10%', right: '-5%', width: 600, height: 600, borderRadius: '50%', background: 'radial-gradient(circle, var(--hero-glow) 0%, transparent 70%)', opacity: 1, pointerEvents: 'none' }} />
         <div style={{ position: 'absolute', bottom: '-8%', left: '-2%', width: 380, height: 380, borderRadius: '50%', background: 'radial-gradient(circle, var(--accent-soft) 0%, transparent 70%)', opacity: 0.65, pointerEvents: 'none' }} />
-        <div style={{ maxWidth: 1200, margin: '0 auto', width: '100%' }}>
+        <div className="page-shell">
           <div className="hero-grid">
             <div>
               <div className="section-label fade-in delay-1">Web Design & Development</div>
@@ -71,34 +71,32 @@ export default function Home() {
                   <span style={{ fontSize: 12, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--gray)' }}>Rose Noir Studio</span>
                 </div>
                 <h1 style={{ fontSize: 'clamp(40px,6vw,80px)', maxWidth: 820, marginBottom: 28, lineHeight: 1.02 }}>
-                  AC Web Studio now feels
+                  Custom websites for
                   <br />
-                  <em style={{ fontStyle: 'italic', color: 'var(--brown)' }}>more personal, more alive</em>
+                  <em style={{ fontStyle: 'italic', color: 'var(--brown)' }}>small businesses with vision</em>
                   <br />
-                  and a lot less safe
+                  and brands ready to grow
                 </h1>
               </div>
               <p className="fade-in delay-3" style={{ fontSize: 17, color: 'var(--gray)', maxWidth: 560, marginBottom: 32, fontWeight: 300, lineHeight: 1.8 }}>
-                Custom-coded from scratch. Design-first. Built to convert. Every page stays grounded in the same Rose Noir direction for a polished, consistent brand feel.
+                AC Web Studio designs and develops custom websites from scratch for founders who want something polished, personal, and built to last.
               </p>
               <div className="fade-in delay-4" style={{ display: 'flex', gap: 16, flexWrap: 'wrap', marginTop: 38 }}>
-                <Link to="/services" className="btn-primary">Shop Packages</Link>
-                <Link to="/portfolio" className="btn-outline">View Work</Link>
+                <Link to="/services" className="btn-primary">View Packages</Link>
+                {/* Portfolio button removed */}
               </div>
               <p className="fade-in delay-4" style={{ fontSize: 13, color: 'var(--gray)', marginTop: 16 }}>
-                `Shop Packages` takes clients to your package page, where they can choose an offer and submit an order.
+                Start with a package, explore the work, or reach out for a custom quote.
               </p>
             </div>
-            <div className="fade-in delay-3">
-              <PortraitCard />
-            </div>
+            {/* PortraitCard removed */}
           </div>
         </div>
       </div>
 
       {/* INTRO BAND */}
       <div style={{ background: 'linear-gradient(135deg, var(--surface-dark), var(--surface-dark-soft))', padding: '80px 5%' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center' }}>
+        <div className="page-shell layout-split">
           <div>
             <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(28px,3.5vw,46px)', color: '#fff', lineHeight: 1.18, marginBottom: 32 }}>
               Design-first development that{' '}
@@ -127,8 +125,8 @@ export default function Home() {
 
       {/* SERVICES PREVIEW */}
       <section style={{ padding: '100px 5%', background: 'var(--white)' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <div className="section-label">What I Offer</div>
+        <div className="page-shell">
+          <div className="section-label">What We Offer</div>
           <h2 style={{ fontSize: 'clamp(30px,4vw,52px)', marginBottom: 16, color: 'var(--black)' }}>
             Packages built for<br />every stage of growth
           </h2>
@@ -158,7 +156,7 @@ export default function Home() {
               >
                 {s.featured && (
                   <span style={{ position: 'absolute', top: 20, right: 20, background: 'var(--brown)', color: '#fff', fontSize: 11, letterSpacing: '0.08em', padding: '4px 12px', borderRadius: 20, textTransform: 'uppercase' }}>
-                    Popular
+                    Best Fit
                   </span>
                 )}
                 <div style={{ fontSize: 12, color: 'var(--brown-light)', letterSpacing: '0.1em', marginBottom: 16 }}>{s.num}</div>
@@ -181,49 +179,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* PORTFOLIO PREVIEW */}
-      <section style={{ padding: '100px 5%', background: 'linear-gradient(180deg, var(--white), var(--cream))' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <div className="section-label">Selected Work</div>
-          <h2 style={{ fontSize: 'clamp(30px,4vw,52px)', marginBottom: 16, color: 'var(--black)' }}>
-            A few things<br />I'm proud of
-          </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20, marginTop: 48 }}>
-            {portfolioPreviews.map(p => (
-              <div
-                key={p.name}
-                style={{ background: 'var(--white)', border: '1px solid var(--brown-pale)', borderRadius: 4, overflow: 'hidden', transition: 'transform 0.3s, box-shadow 0.3s' }}
-                onMouseEnter={e => {
-                  e.currentTarget.style.transform = 'translateY(-3px)'
-                  e.currentTarget.style.boxShadow = '0 16px 32px rgba(0,0,0,0.08)'
-                }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.transform = ''
-                  e.currentTarget.style.boxShadow = ''
-                }}
-              >
-                <div style={{ height: 200, background: p.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'Cormorant Garamond', serif", fontSize: 28, color: 'rgba(255,255,255,0.75)', letterSpacing: '0.04em' }}>
-                  {p.initial}
-                </div>
-                <div style={{ padding: '20px 22px' }}>
-                  <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 20, color: 'var(--black)', marginBottom: 6 }}>{p.name}</div>
-                  <div style={{ fontSize: 13, color: 'var(--gray)', lineHeight: 1.6, fontWeight: 300 }}>{p.desc}</div>
-                  <span style={{ display: 'inline-block', marginTop: 12, fontSize: 11, letterSpacing: '0.08em', color: 'var(--brown)', border: '1px solid var(--brown-pale)', padding: '3px 10px', borderRadius: 20, textTransform: 'uppercase' }}>
-                    {p.tag}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div style={{ textAlign: 'center', marginTop: 48 }}>
-            <Link to="/portfolio" className="btn-outline">See All Projects</Link>
-          </div>
-        </div>
-      </section>
+      {/* Portfolio preview section removed */}
 
       {/* FAQ */}
       <section style={{ padding: '100px 5%', background: 'var(--white)' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 80 }}>
+        <div className="page-shell layout-faq">
           <div>
             <div className="section-label">FAQ</div>
             <h2 style={{ fontSize: 'clamp(28px,3.5vw,46px)', marginBottom: 20, color: 'var(--black)' }}>Common questions</h2>

@@ -4,10 +4,10 @@ import styles from './Navbar.module.css'
 
 const links = [
   { to: '/',          label: 'Home' },
-  { to: '/about',     label: 'About' },
+  { to: '/about',     label: 'About Us' },
   { to: '/services',  label: 'Services' },
-  { to: '/portfolio', label: 'Portfolio' },
-  { to: '/team',      label: 'Team' },
+  // Portfolio link removed
+  // Team link removed, merged into About Us
   { to: '/faq',       label: 'FAQ' },
   { to: '/contact',   label: 'Contact' },
 ]

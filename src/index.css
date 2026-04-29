@@ -42,6 +42,27 @@ a { text-decoration: none; color: inherit; }
 section { padding: 100px 5%; }
 
 .section-inner { max-width: 1200px; margin: 0 auto; }
+.page-shell { max-width: 1100px; margin: 0 auto; width: 100%; }
+
+.layout-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(28px, 5vw, 80px);
+  align-items: center;
+}
+
+.layout-sidebar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+  gap: clamp(28px, 6vw, 100px);
+  align-items: start;
+}
+
+.layout-faq {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: clamp(28px, 5vw, 80px);
+}
 
 .section-label {
   font-size: 12px;
@@ -107,5 +128,30 @@ section { padding: 100px 5%; }
   .hero-grid {
     grid-template-columns: 1fr;
     gap: 32px;
+  }
+
+  .layout-split,
+  .layout-sidebar,
+  .layout-faq {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 760px) {
+  section {
+    padding: 76px 20px;
+  }
+
+  .page-shell {
+    max-width: 100%;
+  }
+
+  .btn-primary,
+  .btn-outline {
+    width: 100%;
+    text-align: center;
+    padding-left: 24px;
+    padding-right: 24px;
   }
 }

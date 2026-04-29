@@ -9,7 +9,7 @@ export default function Faq() {
     <>
       <div style={{ padding: '140px 5% 80px', background: 'linear-gradient(180deg, var(--cream), var(--white))', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', top: '2%', right: '-8%', width: 520, height: 520, borderRadius: '50%', background: 'radial-gradient(circle, var(--hero-glow) 0%, transparent 72%)', opacity: 1, pointerEvents: 'none' }} />
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+        <div className="page-shell">
           <div className="section-label fade-in delay-1">FAQ</div>
           <h1 className="fade-in delay-2" style={{ fontSize: 'clamp(40px,5.5vw,76px)', maxWidth: 760, lineHeight: 1.08, marginBottom: 28 }}>
             Everything clients usually
@@ -23,7 +23,7 @@ export default function Faq() {
       </div>
 
       <section style={{ padding: '100px 5%', background: 'var(--white)' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '0.9fr 1.4fr', gap: 80, alignItems: 'start' }}>
+        <div className="page-shell layout-split" style={{ alignItems: 'start' }}>
           <div>
             <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(28px,3.8vw,48px)', color: 'var(--black)', marginBottom: 20, lineHeight: 1.15 }}>
               Clear answers,
