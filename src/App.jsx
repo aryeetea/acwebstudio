@@ -8,6 +8,7 @@ import Services from './pages/Services'
 import Portfolio from './pages/Portfolio'
 import Contact from './pages/Contact'
 import Faq from './pages/Faq'
+import Orders from './pages/Orders'
 // Team import removed
 export default function App() {
   return (
@@ -19,8 +20,7 @@ export default function App() {
         <Route path="/about"     element={<AboutUs />} />
         <Route path="/services"  element={<Services />} />
         <Route path="/portfolio" element={<Portfolio />} />
-        {/* Portfolio route removed */}
-        {/* Team route removed, merged into AboutUs */}
+        <Route path="/orders"    element={<Orders />} />
         <Route path="/faq"       element={<Faq />} />
         <Route path="/contact"   element={<Contact />} />
       </Routes>

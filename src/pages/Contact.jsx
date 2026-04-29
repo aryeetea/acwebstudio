@@ -41,8 +41,21 @@ export default function Contact() {
 
   const handleSubmit = event => {
     event.preventDefault()
+    // Save order to localStorage
+    const prev = JSON.parse(localStorage.getItem('orders') || '[]')
+    localStorage.setItem('orders', JSON.stringify([{ ...form, date: new Date().toISOString() }, ...prev]))
     setSent(true)
     setTimeout(() => setSent(false), 4000)
+    setForm({
+      firstName: '',
+      lastName: '',
+      email: '',
+      package: searchParams.get('package') || 'professional',
+      businessName: '',
+      website: '',
+      timeline: '',
+      message: '',
+    })
   }
 
   return (

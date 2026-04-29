@@ -40,40 +40,30 @@ export default function Home() {
     <>
       <section className="relative overflow-hidden px-5 pb-24 pt-36 sm:px-6 sm:pt-40">
         <div className="absolute inset-x-0 top-0 h-[620px] bg-[radial-gradient(circle_at_top_right,rgba(196,168,130,0.24),transparent_36%),radial-gradient(circle_at_left,rgba(139,111,78,0.12),transparent_28%)]" />
-        <div className="relative mx-auto grid max-w-6xl items-center gap-14 lg:grid-cols-[1.05fr_0.95fr]">
-          <div>
-            <div className="animate-fade-up flex items-center gap-3 text-[0.72rem] font-medium uppercase tracking-[0.24em] text-warmbrown">
-              <span className="h-px w-8 bg-warmbrown/70" />
-              <span>Web Design & Development</span>
-            </div>
-            <h1 className="animate-fade-up mt-6 max-w-4xl font-display text-[3.25rem] leading-[0.92] text-ink opacity-0 [animation-delay:120ms] sm:text-[4.4rem] lg:text-[5.4rem]">
-              Premium websites for
-              <br />
-              <span className="italic text-warmbrown">small businesses</span>
-              <br />
-              with ambition.
-            </h1>
-            <p className="animate-fade-up mt-7 max-w-xl text-[1.02rem] leading-8 text-ink/66 opacity-0 [animation-delay:240ms] sm:text-[1.08rem]">
-              AC Web Studio creates custom websites with an editorial eye, thoughtful structure, and clean development for founders who want to look established online.
-            </p>
-            <div className="animate-fade-up mt-10 flex flex-col gap-4 opacity-0 [animation-delay:360ms] sm:flex-row">
-              <Link
-                to="/services"
-                className="rounded-full bg-ink px-8 py-4 text-center text-[0.76rem] font-medium uppercase tracking-[0.2em] text-softwhite transition hover:-translate-y-0.5 hover:bg-warmbrown"
-              >
-                View Packages
-              </Link>
-              <Link
-                to="/portfolio"
-                className="rounded-full border border-ink px-8 py-4 text-center text-[0.76rem] font-medium uppercase tracking-[0.2em] text-ink transition hover:bg-ink hover:text-softwhite"
-              >
-                View Work
-              </Link>
-            </div>
+        <div className="relative mx-auto max-w-6xl">
+          <div className="animate-fade-up flex items-center gap-3 text-[0.72rem] font-medium uppercase tracking-[0.24em] text-warmbrown">
+            <span className="h-px w-8 bg-warmbrown/70" />
+            <span>Web Design & Development</span>
           </div>
-
-          <div className="animate-fade-up opacity-0 [animation-delay:280ms]">
-            <PortraitCard />
+          <h1 className="animate-fade-up mt-6 max-w-5xl font-display text-[3.25rem] leading-[0.92] text-ink opacity-0 [animation-delay:120ms] sm:text-[4.4rem] lg:text-[5.4rem]">
+            Premium websites for <span className="italic text-warmbrown">small businesses</span> with ambition.
+          </h1>
+          <p className="animate-fade-up mt-7 max-w-3xl text-[1.08rem] leading-8 text-ink/66 opacity-0 [animation-delay:240ms]">
+            AC Web Studio creates custom websites with an editorial eye, thoughtful structure, and clean development for founders who want to look established online.
+          </p>
+          <div className="animate-fade-up mt-10 flex flex-col gap-4 opacity-0 [animation-delay:360ms] sm:flex-row">
+            <Link
+              to="/services"
+              className="rounded-full bg-ink px-8 py-4 text-center text-[0.76rem] font-medium uppercase tracking-[0.2em] text-softwhite transition hover:-translate-y-0.5 hover:bg-warmbrown"
+            >
+              View Packages
+            </Link>
+            <Link
+              to="/portfolio"
+              className="rounded-full border border-ink px-8 py-4 text-center text-[0.76rem] font-medium uppercase tracking-[0.2em] text-ink transition hover:bg-ink hover:text-softwhite"
+            >
+              View Work
+            </Link>
           </div>
         </div>
       </section>
