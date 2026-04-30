@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="72" viewBox="0 0 300 72" fill="none">
+  <rect width="300" height="72" fill="none"/>
+  <path d="M28 50L51 6L74 50" stroke="#171110" stroke-width="7" stroke-linecap="square" stroke-linejoin="miter"/>
+  <path d="M144 18C137 10.667 127.667 7 116 7C104.333 7 94.3333 11.1333 86 19.4C77.6667 27.6 73.5 37.4333 73.5 48.9C73.5 60.3667 77.6667 70.1667 86 78.3C94.3333 86.5 104.333 90.6 116 90.6C127.733 90.6 137.067 86.9 144 79.5" stroke="#171110" stroke-width="7" stroke-linecap="square" transform="translate(0 -13) scale(0.8)"/>
+  <path d="M171 16H221" stroke="#B58A62" stroke-width="7" stroke-linecap="square"/>
+  <path d="M171 34H221" stroke="#B58A62" stroke-width="7" stroke-linecap="square"/>
+  <path d="M171 52H221" stroke="#B58A62" stroke-width="7" stroke-linecap="square"/>
+  <text x="24" y="70" fill="#171110" font-family="Georgia, 'Times New Roman', serif" font-size="17" letter-spacing="10">WEB STUDIO</text>
+</svg>

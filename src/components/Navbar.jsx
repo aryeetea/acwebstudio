@@ -17,8 +17,8 @@ export default function Navbar() {
     <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6">
       <nav className="mx-auto max-w-6xl rounded-[4px] border border-warmbrown-pale/80 bg-softwhite/76 px-5 py-4 shadow-[0_18px_40px_rgba(17,17,16,0.06)] backdrop-blur-xl sm:px-7">
         <div className="flex items-center justify-between gap-6">
-          <Link to="/" className="font-display text-[1.65rem] leading-none tracking-[0.01em] text-ink">
-            ACE Web <span className="text-warmbrown">Studio</span>
+          <Link to="/" className="shrink-0" aria-label="ACE Web Studio home">
+            <img src="/logo-ace.svg" alt="ACE Web Studio" className="h-11 w-auto" />
           </Link>
 
           <div className="hidden items-center gap-8 md:flex">

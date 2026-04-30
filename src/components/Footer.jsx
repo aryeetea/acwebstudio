@@ -5,8 +5,8 @@ export default function Footer() {
     <footer className="bg-ink px-5 py-20 text-softwhite sm:px-6">
       <div className="mx-auto grid max-w-6xl gap-14 border-b border-softwhite/10 pb-14 lg:grid-cols-[1.6fr_0.9fr_0.9fr_1fr]">
         <div>
-          <Link to="/" className="font-display text-[2rem] leading-none text-softwhite">
-            ACE Web <span className="text-warmbrown-light">Studio</span>
+          <Link to="/" className="inline-block" aria-label="ACE Web Studio home">
+            <img src="/logo-ace-light.svg" alt="ACE Web Studio" className="h-14 w-auto" />
           </Link>
           <p className="mt-5 max-w-sm text-[0.98rem] leading-8 text-softwhite/58">
             Premium, custom websites for small businesses and founders who want to look established, intentional, and worth remembering.
