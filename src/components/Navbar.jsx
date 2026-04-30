@@ -18,7 +18,7 @@ export default function Navbar() {
       <nav className="mx-auto max-w-6xl rounded-[4px] border border-warmbrown-pale/80 bg-softwhite/76 px-5 py-4 shadow-[0_18px_40px_rgba(17,17,16,0.06)] backdrop-blur-xl sm:px-7">
         <div className="flex items-center justify-between gap-6">
           <Link to="/" className="shrink-0" aria-label="ACE Web Studio home">
-            <img src="/logo-ace.svg" alt="ACE Web Studio" className="h-11 w-auto" />
+            <img src="/logo-ace-main.png" alt="ACE Web Studio" className="h-12 w-auto" />
           </Link>
 
           <div className="hidden items-center gap-8 md:flex">
