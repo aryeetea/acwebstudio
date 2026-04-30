@@ -1,4 +1,35 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || ''
+const RAW_API_BASE_URL = import.meta.env.VITE_API_URL || ''
+
+function getApiBaseUrl() {
+  if (!RAW_API_BASE_URL) {
+    return ''
+  }
+
+  if (typeof window === 'undefined') {
+    return RAW_API_BASE_URL
+  }
+
+  try {
+    const configuredUrl = new URL(RAW_API_BASE_URL, window.location.origin)
+    const currentHost = window.location.hostname
+    const configuredHost = configuredUrl.hostname
+    const bothAreVercelPreviews =
+      currentHost.endsWith('.vercel.app') &&
+      configuredHost.endsWith('.vercel.app') &&
+      currentHost !== configuredHost
+
+    // Preview deployments should call their own same-origin API routes.
+    if (bothAreVercelPreviews) {
+      return ''
+    }
+
+    return configuredUrl.origin
+  } catch {
+    return RAW_API_BASE_URL
+  }
+}
+
+const API_BASE_URL = getApiBaseUrl()
 
 function getApiUrl(path) {
   return `${API_BASE_URL}${path}`
