@@ -91,7 +91,7 @@ export default function Contact() {
   return (
     <>
       <section className="relative overflow-hidden px-5 pb-20 pt-36 sm:px-6 sm:pt-40">
-        <div className="absolute inset-x-0 top-0 h-[520px] bg-[radial-gradient(circle_at_left,rgba(196,168,130,0.18),transparent_34%),radial-gradient(circle_at_right,rgba(139,111,78,0.10),transparent_28%)]" />
+        <div className="absolute inset-x-0 top-0 h-[520px] bg-[radial-gradient(circle_at_left,rgba(255,208,0,0.26),transparent_34%),radial-gradient(circle_at_right,rgba(240,23,106,0.18),transparent_28%)]" />
         <div className="relative mx-auto max-w-6xl">
           <SectionIntro
             label="Contact"
@@ -112,13 +112,21 @@ export default function Contact() {
               </p>
               <div className="mt-7 grid gap-4 sm:grid-cols-2">
                 <div className="rounded-[4px] border border-warmbrown-pale bg-cream px-4 py-4">
-                  <div className="text-[0.68rem] uppercase tracking-[0.18em] text-ink/48">Email</div>
-                  <div className="mt-2 text-[0.96rem] text-ink">hello@acwebstudio.com</div>
+                  <div className="text-[0.68rem] uppercase tracking-[0.18em] text-ink/48">Aileen — Web Development</div>
+                  <a href="mailto:aileen.aryeetey@outlook.com" className="mt-2 block text-[0.9rem] text-warmbrown transition hover:text-ink">
+                    aileen.aryeetey@outlook.com
+                  </a>
                 </div>
                 <div className="rounded-[4px] border border-warmbrown-pale bg-cream px-4 py-4">
-                  <div className="text-[0.68rem] uppercase tracking-[0.18em] text-ink/48">Reply Window</div>
-                  <div className="mt-2 text-[0.96rem] text-ink">Within 24 hours</div>
+                  <div className="text-[0.68rem] uppercase tracking-[0.18em] text-ink/48">Cynthia — UI/UX Design</div>
+                  <a href="mailto:cowusuforkuo@gmail.com" className="mt-2 block text-[0.9rem] text-warmbrown transition hover:text-ink">
+                    cowusuforkuo@gmail.com
+                  </a>
                 </div>
+              </div>
+              <div className="mt-4 rounded-[4px] border border-warmbrown-pale bg-cream px-4 py-4">
+                <div className="text-[0.68rem] uppercase tracking-[0.18em] text-ink/48">Reply Window</div>
+                <div className="mt-2 text-[0.96rem] text-ink">Within 24 hours</div>
               </div>
             </div>
 

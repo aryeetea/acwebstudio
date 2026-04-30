@@ -20,7 +20,7 @@ export default function AboutUs() {
   return (
     <>
       <section className="relative overflow-hidden px-5 pb-20 pt-36 sm:px-6 sm:pt-40">
-        <div className="absolute inset-x-0 top-0 h-[520px] bg-[radial-gradient(circle_at_left,rgba(196,168,130,0.18),transparent_34%),radial-gradient(circle_at_top_right,rgba(139,111,78,0.12),transparent_28%)]" />
+        <div className="absolute inset-x-0 top-0 h-[520px] bg-[radial-gradient(circle_at_left,rgba(255,208,0,0.26),transparent_34%),radial-gradient(circle_at_top_right,rgba(240,23,106,0.20),transparent_28%)]" />
         <div className="relative mx-auto max-w-6xl">
           <SectionIntro
             label="About"

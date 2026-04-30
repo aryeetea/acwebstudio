@@ -199,7 +199,7 @@ export default function Admin() {
   if (!token) {
     return (
       <section className="relative overflow-hidden px-5 pb-24 pt-36 sm:px-6 sm:pt-40">
-        <div className="absolute inset-x-0 top-0 h-130 bg-[radial-gradient(circle_at_top,rgba(196,168,130,0.18),transparent_34%),radial-gradient(circle_at_left,rgba(139,111,78,0.08),transparent_28%)]" />
+        <div className="absolute inset-x-0 top-0 h-130 bg-[radial-gradient(circle_at_top,rgba(255,208,0,0.24),transparent_34%),radial-gradient(circle_at_left,rgba(240,23,106,0.16),transparent_28%)]" />
         <div className="relative mx-auto max-w-3xl">
           <div className="rounded-[4px] border border-warmbrown-pale bg-softwhite p-8 shadow-[0_24px_60px_rgba(17,17,16,0.08)] sm:p-10">
             <p className="text-[0.72rem] font-medium uppercase tracking-[0.24em] text-warmbrown">Admin</p>

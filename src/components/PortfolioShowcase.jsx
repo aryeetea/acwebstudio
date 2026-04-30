@@ -47,7 +47,7 @@ export default function PortfolioShowcase({ projects, loading, emptyMessage = 'N
                   className="h-full w-full object-cover object-top transition duration-500 group-hover:scale-[1.02]"
                 />
               ) : (
-                <div className="flex h-full items-center justify-center bg-[radial-gradient(circle_at_top,rgba(196,168,130,0.35),transparent_42%),linear-gradient(135deg,#111110,#4b3f35,#C4A882)] px-8 text-center font-display text-4xl text-softwhite">
+                <div className="flex h-full items-center justify-center bg-[radial-gradient(circle_at_top,rgba(255,201,60,0.32),transparent_42%),linear-gradient(135deg,#c2185b,#ff4f9a,#ffc93c)] px-8 text-center font-display text-4xl text-softwhite">
                   {project.title}
                 </div>
               )}

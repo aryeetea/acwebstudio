@@ -14,7 +14,7 @@ const team = [
 export default function PortraitCard() {
   return (
     <div className="relative mx-auto w-full max-w-[430px]">
-      <div className="animate-float-soft absolute -bottom-6 -left-5 h-[62%] w-[58%] rounded-[32px] bg-[radial-gradient(circle,rgba(196,168,130,0.28),transparent_68%)] blur-xl" />
+      <div className="animate-float-soft absolute -bottom-6 -left-5 h-[62%] w-[58%] rounded-[32px] bg-[radial-gradient(circle,rgba(240,23,106,0.22),transparent_68%)] blur-xl" />
 
       <div className="relative space-y-5">
         {team.map(member => (

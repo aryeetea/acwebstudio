@@ -38,14 +38,15 @@ export default function Footer() {
           <div className="mt-5 grid gap-3 text-sm uppercase tracking-[0.12em] text-softwhite/58">
             <Link to="/contact">Start a Project</Link>
             <Link to="/faq">FAQ</Link>
-            <a href="mailto:hello@acwebstudio.com">hello@acwebstudio.com</a>
+            <a href="mailto:aileen.aryeetey@outlook.com">aileen.aryeetey@outlook.com</a>
+            <a href="mailto:cowusuforkuo@gmail.com">cowusuforkuo@gmail.com</a>
             <Link to="/admin">Admin</Link>
           </div>
         </div>
       </div>
 
       <div className="mx-auto flex max-w-6xl flex-col justify-between gap-3 pt-8 text-xs uppercase tracking-[0.14em] text-softwhite/35 sm:flex-row">
-        <p>© 2025 AC Web Studio</p>
+        <p>© 2026 AC Web Studio</p>
         <p>Design-first websites, built from scratch</p>
       </div>
     </footer>
