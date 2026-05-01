@@ -93,6 +93,9 @@ export default function Admin() {
   const [updatingOrderId, setUpdatingOrderId] = useState('')
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
+  const [projectError, setProjectError] = useState('')
+  const [ordersError, setOrdersError] = useState('')
+  const [inquiriesError, setInquiriesError] = useState('')
   const urlRef = useRef(null)
 
   useEffect(() => {
@@ -120,16 +123,19 @@ export default function Admin() {
           return
         }
 
-        const [items, savedOrders, savedInquiries] = await Promise.all([
+        const [projectsResult, ordersResult, inquiriesResult] = await Promise.allSettled([
           fetchPortfolioProjects(),
           fetchAdminOrders(token),
           fetchAdminContactInquiries(token),
         ])
 
         if (!cancelled) {
-          setProjects(items)
-          setOrders(savedOrders)
-          setInquiries(savedInquiries)
+          setProjects(projectsResult.status === 'fulfilled' ? projectsResult.value : [])
+          setOrders(ordersResult.status === 'fulfilled' ? ordersResult.value : [])
+          setInquiries(inquiriesResult.status === 'fulfilled' ? inquiriesResult.value : [])
+          setProjectError(projectsResult.status === 'rejected' ? projectsResult.reason?.message || 'Could not load projects right now.' : '')
+          setOrdersError(ordersResult.status === 'rejected' ? ordersResult.reason?.message || 'Could not load orders right now.' : '')
+          setInquiriesError(inquiriesResult.status === 'rejected' ? inquiriesResult.reason?.message || 'Could not load inquiries right now.' : '')
         }
       } catch (loadError) {
         if (!cancelled) {
@@ -174,6 +180,7 @@ export default function Admin() {
     setSubmitting(true)
     setError('')
     setMessage('')
+    setProjectError('')
 
     const urls = urlInput
       .split('\n')
@@ -223,6 +230,7 @@ export default function Admin() {
   async function handleRemoveProject(id) {
     setError('')
     setMessage('')
+    setProjectError('')
 
     try {
       await deletePortfolioProject(id, token)
@@ -237,6 +245,7 @@ export default function Admin() {
     setUpdatingProjectId(id)
     setError('')
     setMessage('')
+    setProjectError('')
 
     try {
       const updatedProject = await updatePortfolioProjectPackage(id, packageType, token)
@@ -253,6 +262,7 @@ export default function Admin() {
     setUpdatingOrderId(id)
     setError('')
     setMessage('')
+    setOrdersError('')
 
     try {
       const updatedOrder = await updateAdminOrderStatus(id, status, token)
@@ -276,6 +286,9 @@ export default function Admin() {
     setProjects([])
     setOrders([])
     setInquiries([])
+    setProjectError('')
+    setOrdersError('')
+    setInquiriesError('')
     setCode('')
     setMessage('Signed out.')
   }
@@ -450,6 +463,11 @@ export default function Admin() {
               </div>
 
               <div className="mt-8 space-y-5">
+                {projectError && (
+                  <p className="rounded-[4px] border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+                    {projectError}
+                  </p>
+                )}
                 {projects.length === 0 ? (
                   <div className="rounded-[4px] border border-dashed border-warmbrown-pale bg-cream px-6 py-10 text-center text-ink/60">
                     No projects added yet.
@@ -529,13 +547,18 @@ export default function Admin() {
                     {loading ? 'Loading...' : `${orders.length} total`}
                   </span>
                 </div>
+                {ordersError && (
+                  <p className="mb-4 rounded-[4px] border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+                    {ordersError}
+                  </p>
+                )}
                 {loading ? (
                   <div className="rounded-[4px] border border-dashed border-warmbrown-pale bg-cream px-6 py-10 text-center text-ink/60">
                     Loading orders...
                   </div>
                 ) : orders.length === 0 ? (
                   <div className="rounded-[4px] border border-dashed border-warmbrown-pale bg-cream px-6 py-10 text-center text-ink/60">
-                  No inquiries yet.
+                    No orders yet.
                   </div>
                 ) : (
                   <div className="grid gap-5">
@@ -636,13 +659,18 @@ export default function Admin() {
                     {loading ? 'Loading...' : `${inquiries.length} total`}
                   </span>
                 </div>
+              {inquiriesError && (
+                <p className="mb-4 rounded-[4px] border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+                  {inquiriesError}
+                </p>
+              )}
               {loading ? (
                 <div className="rounded-[4px] border border-dashed border-warmbrown-pale bg-cream px-6 py-10 text-center text-ink/60">
                   Loading inquiries...
                 </div>
               ) : inquiries.length === 0 ? (
                 <div className="rounded-[4px] border border-dashed border-warmbrown-pale bg-cream px-6 py-10 text-center text-ink/60">
-                  No orders yet.
+                  No inquiries yet.
                 </div>
               ) : (
                 <div className="overflow-x-auto rounded-[4px] border border-warmbrown-pale bg-cream">

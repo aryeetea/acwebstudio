@@ -20,7 +20,7 @@ import {
   stripe,
   toStripeAmount,
 } from './_shared/core.js'
-import { supabase } from './supabase.js'
+import { supabase, supabaseEnvStatus } from './supabase.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const isDirectRun = process.argv[1] ? path.resolve(process.argv[1]) === __filename : false
@@ -924,6 +924,46 @@ app.get('/api/admin/status', async (_req, res) => {
     })
   } catch (error) {
     res.status(500).json({ error: error.message || 'Could not load admin status.' })
+  }
+})
+
+app.get('/api/admin/debug-supabase', async (_req, res) => {
+  try {
+    const response = {
+      ...supabaseEnvStatus,
+      hasAdminAccessCode: Boolean(ADMIN_ACCESS_CODE),
+      hasStripeSecretKey: Boolean(stripe),
+      queryOk: false,
+      tableChecks: {},
+    }
+
+    if (!supabaseEnvStatus.hasSupabaseUrl || !supabaseEnvStatus.hasSupabaseServiceRoleKey || !supabase) {
+      return res.status(500).json(response)
+    }
+
+    const [portfolioResult, ordersResult, inquiriesResult] = await Promise.all([
+      supabase.from('portfolio_projects').select('id', { count: 'exact', head: true }),
+      supabase.from('orders').select('id', { count: 'exact', head: true }),
+      supabase.from('contact_inquiries').select('id', { count: 'exact', head: true }),
+    ])
+
+    response.queryOk = true
+    response.tableChecks = {
+      portfolio_projects: portfolioResult.error ? portfolioResult.error.message : 'ok',
+      orders: ordersResult.error ? ordersResult.error.message : 'ok',
+      contact_inquiries: inquiriesResult.error ? inquiriesResult.error.message : 'ok',
+    }
+
+    const hasErrors = Object.values(response.tableChecks).some(value => value !== 'ok')
+    return res.status(hasErrors ? 500 : 200).json(response)
+  } catch (error) {
+    return res.status(500).json({
+      ...supabaseEnvStatus,
+      hasAdminAccessCode: Boolean(ADMIN_ACCESS_CODE),
+      hasStripeSecretKey: Boolean(stripe),
+      queryOk: false,
+      error: error.message || 'Supabase diagnostic failed.',
+    })
   }
 })
 
