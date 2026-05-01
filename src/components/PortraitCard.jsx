@@ -9,12 +9,17 @@ const team = [
     role: 'Web Development',
     image: '/aileen-about.jpeg',
   },
+  {
+    name: 'Edwina',
+    role: 'Art Direction',
+    image: '/edwina-about.jpg',
+  },
 ]
 
 export default function PortraitCard() {
   return (
     <div className="relative mx-auto w-full max-w-[430px]">
-      <div className="animate-float-soft absolute -bottom-6 -left-5 h-[62%] w-[58%] rounded-[32px] bg-[radial-gradient(circle,rgba(240,23,106,0.22),transparent_68%)] blur-xl" />
+      <div className="animate-float-soft absolute -bottom-6 -left-5 h-[62%] w-[58%] rounded-[32px] bg-[radial-gradient(circle,rgba(196,168,130,0.24),transparent_68%)] blur-xl" />
 
       <div className="relative space-y-5">
         {team.map(member => (
@@ -26,7 +31,7 @@ export default function PortraitCard() {
               <img
                 src={member.image}
                 alt={member.name}
-                className="block h-auto w-full rounded-[4px] object-contain"
+                className="block aspect-[4/5] w-full rounded-[4px] object-cover"
               />
             </div>
 

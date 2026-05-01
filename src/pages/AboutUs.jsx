@@ -9,6 +9,12 @@ const values = [
   ['Built to convert', 'The goal is not only to look beautiful. It is to help visitors trust you and take the next step.'],
 ]
 
+const team = [
+  ['Aileen', 'Web Development'],
+  ['Cynthia', 'UI/UX Design'],
+  ['Edwina', 'Art Direction'],
+]
+
 const process = [
   ['01', 'Discovery', 'We define goals, audience, tone, and priorities before touching layout or code.'],
   ['02', 'Design', 'The visual direction is shaped first so every page has a clear atmosphere and hierarchy.'],
@@ -20,12 +26,12 @@ export default function AboutUs() {
   return (
     <>
       <section className="relative overflow-hidden px-5 pb-20 pt-36 sm:px-6 sm:pt-40">
-        <div className="absolute inset-x-0 top-0 h-[520px] bg-[radial-gradient(circle_at_left,rgba(255,208,0,0.26),transparent_34%),radial-gradient(circle_at_top_right,rgba(240,23,106,0.20),transparent_28%)]" />
+        <div className="absolute inset-x-0 top-0 h-[520px] bg-[radial-gradient(circle_at_top_right,rgba(196,168,130,0.24),transparent_36%),radial-gradient(circle_at_left,rgba(139,111,78,0.12),transparent_28%)]" />
         <div className="relative mx-auto max-w-6xl">
           <SectionIntro
             label="About"
             title="A small studio with a high standard for detail."
-            copy="ACE Web Studio brings design direction and front-end craft together to create websites that feel elevated, intentional, and ready to represent serious businesses."
+            copy="ACE Web Studio brings strategy, design direction, and front-end craft together to create websites that feel elevated, intentional, and ready to represent serious businesses."
           />
         </div>
       </section>
@@ -41,11 +47,26 @@ export default function AboutUs() {
               ACE Web Studio was built for founders and small business owners who want a website they can feel proud to send people to. We believe premium does not have to mean cold, and minimal does not have to mean generic.
             </p>
             <p>
+              Our studio works across three connected disciplines: web development, UI/UX design, and art direction. That mix helps us shape websites that are not only functional, but also visually confident and aligned with the brand behind them.
+            </p>
+            <p>
               Our work is shaped by an editorial mindset: strong hierarchy, generous spacing, confident typography, and a sense of restraint that lets the right details stand out. Before anything is developed, we think about how the brand should feel and what the visitor should understand.
             </p>
             <p>
               The end result is a custom website that feels calm, refined, and strategic, with enough personality to feel alive. It is built to support trust, communicate quality, and help the business behind it look established online.
             </p>
+
+            <div className="rounded-[4px] border border-warmbrown-pale bg-cream px-6 py-6">
+              <div className="text-[0.72rem] uppercase tracking-[0.22em] text-warmbrown">Studio Team</div>
+              <div className="mt-5 grid gap-3 sm:grid-cols-3">
+                {team.map(([name, role]) => (
+                  <div key={name} className="rounded-[4px] border border-warmbrown-pale bg-softwhite px-4 py-4">
+                    <div className="font-display text-[1.5rem] leading-none text-ink">{name}</div>
+                    <div className="mt-2 text-[0.72rem] uppercase tracking-[0.16em] text-ink/55">{role}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
 
             <div className="grid gap-5 pt-8 md:grid-cols-2">
               {values.map(([title, copy]) => (
