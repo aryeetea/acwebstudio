@@ -2,10 +2,25 @@ import cors from 'cors'
 import crypto from 'crypto'
 import express from 'express'
 import path from 'path'
-import Stripe from 'stripe'
 import { fileURLToPath } from 'url'
-import { getPriceRangeFromLabel, packageMap, packages } from '../src/data/packages.js'
-import { hasSupabaseConfig, supabase } from './supabase.js'
+import { packageMap, packages } from '../src/data/packages.js'
+import {
+  ADMIN_ACCESS_CODE,
+  EMAILJS_PRIVATE_KEY,
+  EMAILJS_PUBLIC_KEY,
+  EMAILJS_SERVICE_ID,
+  EMAILJS_TEMPLATE_ID,
+  ORDER_NOTIFICATION_EMAIL,
+  PACKAGE_TYPE_OPTIONS,
+  STRIPE_CURRENCY,
+  ensureStripe,
+  ensureSupabase,
+  getSiteUrl,
+  parseMoneyRange,
+  stripe,
+  toStripeAmount,
+} from './_shared/core.js'
+import { supabase } from './supabase.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const isDirectRun = process.argv[1] ? path.resolve(process.argv[1]) === __filename : false
@@ -15,31 +30,10 @@ const app = express()
 const PORT = process.env.PORT || 5050
 const TOKEN_SECRET = process.env.ADMIN_TOKEN_SECRET || 'change-me-before-production'
 const TOKEN_TTL_MS = 1000 * 60 * 60 * 12
-const ADMIN_ACCESS_CODE = process.env.ADMIN_ACCESS_CODE?.trim() || ''
-const PACKAGE_OPTIONS = new Set([...packages.map(pkg => pkg.name), 'Custom'])
-const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY?.trim() || ''
-const STRIPE_CURRENCY = (process.env.STRIPE_CURRENCY?.trim() || 'usd').toLowerCase()
-const ORDER_NOTIFICATION_EMAIL = process.env.ORDER_NOTIFICATION_EMAIL?.trim() || 'webstudioace@outlook.com'
-const EMAILJS_SERVICE_ID = process.env.EMAILJS_SERVICE_ID?.trim() || ''
-const EMAILJS_TEMPLATE_ID = process.env.EMAILJS_TEMPLATE_ID?.trim() || ''
-const EMAILJS_PUBLIC_KEY = process.env.EMAILJS_PUBLIC_KEY?.trim() || ''
-const EMAILJS_PRIVATE_KEY = process.env.EMAILJS_PRIVATE_KEY?.trim() || ''
-const stripe = STRIPE_SECRET_KEY ? new Stripe(STRIPE_SECRET_KEY) : null
+const PACKAGE_OPTIONS = new Set(PACKAGE_TYPE_OPTIONS)
 
 app.use(cors())
 app.use(express.json({ limit: '2mb' }))
-
-function ensureSupabase() {
-  if (!hasSupabaseConfig || !supabase) {
-    throw new Error('Supabase is not configured. Add SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY to the API environment.')
-  }
-}
-
-function ensureStripe() {
-  if (!stripe) {
-    throw new Error('Stripe is not configured. Add STRIPE_SECRET_KEY to the API environment.')
-  }
-}
 
 function canSendEmail() {
   return Boolean(EMAILJS_SERVICE_ID && EMAILJS_TEMPLATE_ID && EMAILJS_PUBLIC_KEY)
@@ -169,40 +163,6 @@ async function findOrderBySessionId(sessionId) {
   }
 
   return data
-}
-
-function getSiteUrl(req) {
-  const configured = process.env.SITE_URL?.trim()
-
-  if (configured) {
-    return configured.replace(/\/+$/g, '')
-  }
-
-  const origin = req.headers.origin?.trim()
-  if (origin) {
-    return origin.replace(/\/+$/g, '')
-  }
-
-  const host = req.headers.host?.trim()
-  if (host) {
-    const forwardedProto = req.headers['x-forwarded-proto']
-    const protocol = typeof forwardedProto === 'string' ? forwardedProto.split(',')[0].trim() : 'http'
-    return `${protocol}://${host}`
-  }
-
-  return 'http://localhost:5173'
-}
-
-function parseMoneyRange(label) {
-  const [min, max] = getPriceRangeFromLabel(label)
-  return {
-    min,
-    max,
-  }
-}
-
-function toStripeAmount(amount) {
-  return Math.max(0, Math.round(amount * 100))
 }
 
 function getCheckoutOrderDetails(body = {}) {
