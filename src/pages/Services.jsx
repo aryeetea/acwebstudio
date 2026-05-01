@@ -145,7 +145,7 @@ export default function Services() {
                 <tr className="border-b border-warmbrown-pale bg-softwhite">
                   <th className="px-6 py-4 text-[0.7rem] uppercase tracking-[0.2em] text-ink/50 sm:px-8">Feature</th>
                   {['Starter', 'Business', 'Professional'].map(head => (
-                    <th key={head} className={`px-6 py-4 text-[0.7rem] uppercase tracking-[0.2em] sm:px-8 ${head === 'Standard' ? 'text-warmbrown' : 'text-ink/50'}`}>
+                    <th key={head} className={`px-6 py-4 text-[0.7rem] uppercase tracking-[0.2em] sm:px-8 ${head === 'Business' ? 'text-warmbrown' : 'text-ink/50'}`}>
                       {head}
                     </th>
                   ))}

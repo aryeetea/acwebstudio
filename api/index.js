@@ -4,7 +4,7 @@ import express from 'express'
 import path from 'path'
 import Stripe from 'stripe'
 import { fileURLToPath } from 'url'
-import { getPriceRangeFromLabel, packageMap } from '../src/data/packages.js'
+import { getPriceRangeFromLabel, packageMap, packages } from '../src/data/packages.js'
 import { hasSupabaseConfig, supabase } from './supabase.js'
 
 const __filename = fileURLToPath(import.meta.url)
@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 5050
 const TOKEN_SECRET = process.env.ADMIN_TOKEN_SECRET || 'change-me-before-production'
 const TOKEN_TTL_MS = 1000 * 60 * 60 * 12
 const ADMIN_ACCESS_CODE = process.env.ADMIN_ACCESS_CODE?.trim() || ''
-const PACKAGE_OPTIONS = new Set(['Starter', 'Professional', 'Signature', 'Custom'])
+const PACKAGE_OPTIONS = new Set([...packages.map(pkg => pkg.name), 'Custom'])
 const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY?.trim() || ''
 const STRIPE_CURRENCY = (process.env.STRIPE_CURRENCY?.trim() || 'usd').toLowerCase()
 const ORDER_NOTIFICATION_EMAIL = process.env.ORDER_NOTIFICATION_EMAIL?.trim() || 'webstudioace@outlook.com'
@@ -534,9 +534,9 @@ function suggestPackageType(html) {
 
   const score = internalLinks.size + sections + forms * 2 + Math.min(serviceKeywords, 6)
 
-  if (score <= 6) return 'Starter'
-  if (score <= 14) return 'Professional'
-  return 'Signature'
+  if (score <= 6) return packages[0].name
+  if (score <= 14) return packages[1].name
+  return packages[2].name
 }
 
 function getMetaFromHtml(html, fallbackUrl) {

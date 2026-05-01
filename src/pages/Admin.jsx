@@ -11,9 +11,10 @@ import {
   updatePortfolioProjectPackage,
   verifyAdminSession,
 } from '../lib/api'
+import { packages } from '../data/packages'
 
 const ADMIN_TOKEN_KEY = 'adminSessionToken'
-const PACKAGE_OPTIONS = ['Starter', 'Professional', 'Signature', 'Custom']
+const PACKAGE_OPTIONS = [...packages.map(pkg => pkg.name), 'Custom']
 
 function getStoredToken() {
   return localStorage.getItem(ADMIN_TOKEN_KEY) || ''
@@ -45,6 +46,34 @@ function formatCurrency(amount) {
     currency: 'USD',
     maximumFractionDigits: 0,
   }).format(amount || 0)
+}
+
+function getOrderStatusLabel(status) {
+  switch (status) {
+    case 'payment_pending':
+      return 'Awaiting Payment'
+    case 'paid':
+      return 'Deposit Paid'
+    case 'accepted':
+      return 'Accepted'
+    case 'declined':
+      return 'Declined'
+    default:
+      return 'Pending Review'
+  }
+}
+
+function getOrderStatusClasses(status) {
+  switch (status) {
+    case 'accepted':
+      return 'bg-green-50 text-green-700'
+    case 'declined':
+      return 'bg-red-50 text-red-700'
+    case 'paid':
+      return 'bg-amber-50 text-amber-800'
+    default:
+      return 'bg-softwhite text-warmbrown'
+  }
 }
 
 export default function Admin() {
@@ -361,7 +390,7 @@ export default function Admin() {
               <h2 className="mt-4 font-display text-[2.6rem] leading-[0.96] text-ink">Publish a project link to the public portfolio.</h2>
 
               <p className="mt-5 text-[1rem] leading-8 text-ink/65">
-                When you add a URL here, the backend visits the live website, captures its content, saves preview images, and sends that rendered project to the main site.
+                When you add a URL here, the backend visits the live website, captures its content, saves preview images when possible, and publishes the project to the main site.
               </p>
 
               <form onSubmit={handleAddProject} className="mt-8 space-y-5">
@@ -506,7 +535,7 @@ export default function Admin() {
                   </div>
                 ) : orders.length === 0 ? (
                   <div className="rounded-[4px] border border-dashed border-warmbrown-pale bg-cream px-6 py-10 text-center text-ink/60">
-                    No orders yet.
+                  No inquiries yet.
                   </div>
                 ) : (
                   <div className="grid gap-5">
@@ -518,8 +547,8 @@ export default function Admin() {
                               <h4 className="font-display text-[1.8rem] text-ink">
                                 {order.firstName} {order.lastName}
                               </h4>
-                              <span className="rounded-full bg-softwhite px-3 py-1 text-[0.66rem] uppercase tracking-[0.14em] text-warmbrown">
-                                {order.status}
+                              <span className={`rounded-full px-3 py-1 text-[0.66rem] uppercase tracking-[0.14em] ${getOrderStatusClasses(order.status)}`}>
+                                {getOrderStatusLabel(order.status)}
                               </span>
                             </div>
                             <div className="mt-3 flex flex-wrap gap-4 text-sm text-ink/60">
