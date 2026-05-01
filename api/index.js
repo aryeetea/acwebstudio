@@ -2,7 +2,6 @@ import cors from 'cors'
 import crypto from 'crypto'
 import express from 'express'
 import path from 'path'
-import puppeteer from 'puppeteer'
 import Stripe from 'stripe'
 import { fileURLToPath } from 'url'
 import { getPriceRangeFromLabel, packageMap } from '../src/data/packages.js'
@@ -640,6 +639,7 @@ async function analyzeProject(url) {
   let browser
 
   try {
+    const { default: puppeteer } = await import('puppeteer')
     browser = await puppeteer.launch({ args: ['--no-sandbox'] })
     const page = await browser.newPage()
     await page.setViewport({ width: 1440, height: 1024, deviceScaleFactor: 1 })
