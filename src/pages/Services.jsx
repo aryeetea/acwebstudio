@@ -89,14 +89,14 @@ export default function Services() {
               </div>
 
               <Link
-                to={`/contact?package=${pkg.slug}`}
+                to={`/checkout?package=${pkg.slug}`}
                 className={`mt-8 inline-flex w-full items-center justify-center rounded-full px-6 py-4 text-center text-[0.75rem] font-medium uppercase tracking-[0.18em] transition hover:-translate-y-0.5 ${
                   pkg.featured
                     ? 'bg-softwhite text-ink hover:bg-warmbrown hover:text-softwhite'
                     : 'bg-ink text-softwhite hover:bg-warmbrown'
                 }`}
               >
-                Choose {pkg.name}
+                Order {pkg.name}
               </Link>
             </article>
           ))}
@@ -146,10 +146,10 @@ export default function Services() {
           </p>
           <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
             <Link
-              to="/contact"
+              to="/checkout"
               className="rounded-full bg-ink px-8 py-4 text-center text-[0.76rem] font-medium uppercase tracking-[0.2em] text-softwhite transition hover:-translate-y-0.5 hover:bg-warmbrown"
             >
-              Request a Quote
+              Start Checkout
             </Link>
             <Link
               to="/about"

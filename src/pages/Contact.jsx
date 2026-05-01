@@ -1,41 +1,33 @@
 import { useState } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import FaqAccordion from '../components/FaqAccordion'
 import SectionIntro from '../components/SectionIntro'
 import { faqs } from '../data/faqs'
-import { packageMap, packageOptions } from '../data/packages'
 import { createContactInquiry } from '../lib/api'
 import emailjs from '@emailjs/browser'
 
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || ''
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || ''
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || ''
+
 export default function Contact() {
-  const [searchParams, setSearchParams] = useSearchParams()
   const [openFaq, setOpenFaq] = useState(0)
   const [sent, setSent] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
   const [emailWarning, setEmailWarning] = useState('')
-  const initialPackage = searchParams.get('package') || ''
   const [form, setForm] = useState({
     firstName: '',
     lastName: '',
     email: '',
-    package: initialPackage,
     businessName: '',
     website: '',
     timeline: '',
     message: '',
   })
 
-  const selectedPackage = form.package ? packageMap[form.package] : null
-
   const handleChange = event => {
     setForm(current => ({ ...current, [event.target.name]: event.target.value }))
-  }
-
-  const handlePackageChange = event => {
-    const nextPackage = event.target.value
-    setForm(current => ({ ...current, package: nextPackage }))
-    setSearchParams(nextPackage ? { package: nextPackage } : {})
   }
 
   const handleSubmit = async event => {
@@ -53,24 +45,27 @@ export default function Contact() {
     }
 
     // Send email via EmailJS
-    try {
-      await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        {
-          firstName: form.firstName,
-          lastName: form.lastName,
-          email: form.email,
-          package: form.package,
-          businessName: form.businessName,
-          website: form.website,
-          timeline: form.timeline,
-          message: form.message,
-        },
-        EMAILJS_PUBLIC_KEY
-      )
-    } catch {
-      setEmailWarning('Your message was saved, but the email notification could not be sent right now.')
+    if (EMAILJS_SERVICE_ID && EMAILJS_TEMPLATE_ID && EMAILJS_PUBLIC_KEY) {
+      try {
+        await emailjs.send(
+          EMAILJS_SERVICE_ID,
+          EMAILJS_TEMPLATE_ID,
+          {
+            firstName: form.firstName,
+            lastName: form.lastName,
+            email: form.email,
+            businessName: form.businessName,
+            website: form.website,
+            timeline: form.timeline,
+            message: form.message,
+          },
+          EMAILJS_PUBLIC_KEY
+        )
+      } catch {
+        setEmailWarning('Your message was saved, but the email notification could not be sent right now.')
+      }
+    } else {
+      setEmailWarning('Your message was saved, but contact email notifications are not configured yet.')
     }
 
     setSent(true)
@@ -79,7 +74,6 @@ export default function Contact() {
       firstName: '',
       lastName: '',
       email: '',
-      package: searchParams.get('package') || '',
       businessName: '',
       website: '',
       timeline: '',
@@ -96,7 +90,7 @@ export default function Contact() {
           <SectionIntro
             label="Contact"
             title="Get in touch with ACE Web Studio."
-            copy="Reach out for questions, project inquiries, or package requests. If you came from a service package, we will keep that selection attached to your message."
+            copy="Reach out for questions, collaborations, or anything you want to discuss before booking. Orders and payments now happen in the separate checkout flow."
           />
         </div>
       </section>
@@ -130,20 +124,11 @@ export default function Contact() {
               </div>
             </div>
 
-            {selectedPackage && (
-              <div className="rounded-[4px] border border-warmbrown-pale bg-softwhite p-7 shadow-[0_16px_34px_rgba(17,17,16,0.05)]">
-                <div className="text-[0.72rem] uppercase tracking-[0.24em] text-warmbrown">Selected Package</div>
-                <h2 className="mt-4 font-display text-[2rem] leading-none text-ink">{selectedPackage.name}</h2>
-                <div className="mt-3 text-[1.05rem] text-warmbrown">{selectedPackage.price}</div>
-                <p className="mt-5 text-[0.96rem] leading-8 text-ink/64">{selectedPackage.who}</p>
-              </div>
-            )}
-
             <div className="grid gap-4">
               {[
                 ['Project type', 'Custom-coded websites'],
                 ['Best fit', 'Founders and small businesses'],
-                ['Best use', 'Questions, quotes, and project inquiries'],
+                ['Best use', 'Questions, collaborations, and general inquiries'],
               ].map(([label, value]) => (
                 <div key={label} className="rounded-[4px] border border-warmbrown-pale bg-cream px-5 py-5">
                   <div className="text-[0.68rem] uppercase tracking-[0.18em] text-ink/48">{label}</div>
@@ -164,25 +149,6 @@ export default function Contact() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="grid gap-5">
-                {selectedPackage && (
-                  <div className="rounded-[4px] border border-warmbrown-pale bg-cream px-4 py-4">
-                    <div className="text-[0.68rem] uppercase tracking-[0.18em] text-ink/48">Interested Package</div>
-                    <div className="mt-2 flex flex-wrap items-center justify-between gap-3">
-                      <div className="text-[0.96rem] text-ink">{selectedPackage.name}</div>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setForm(current => ({ ...current, package: '' }))
-                          setSearchParams({})
-                        }}
-                        className="rounded-full border border-warmbrown-pale px-3 py-1 text-[0.68rem] uppercase tracking-[0.16em] text-ink/60"
-                      >
-                        Clear
-                      </button>
-                    </div>
-                  </div>
-                )}
-
                 <div className="grid gap-5 md:grid-cols-2">
                   <Field label="First Name" name="firstName" value={form.firstName} onChange={handleChange} placeholder="Aileen" />
                   <Field label="Last Name" name="lastName" value={form.lastName} onChange={handleChange} placeholder="Aryeetey" />
@@ -198,38 +164,16 @@ export default function Contact() {
                   <Field label="Preferred Timeline" name="timeline" value={form.timeline} onChange={handleChange} placeholder="Whenever works best for you" />
                 </div>
 
-                {!selectedPackage && (
-                  <div>
-                    <label className="mb-2 block text-[0.7rem] uppercase tracking-[0.18em] text-ink/50">
-                      Package Interest
-                    </label>
-                    <select
-                      name="package"
-                      value={form.package}
-                      onChange={handlePackageChange}
-                      className="w-full rounded-[4px] border border-warmbrown-pale bg-cream px-4 py-4 text-[0.96rem] text-ink outline-none transition focus:border-warmbrown"
-                    >
-                      <option value="">General inquiry</option>
-                      {packageOptions.map(option => (
-                        <option key={option.value} value={option.value}>
-                          {option.label}
-                        </option>
-                      ))}
-                      <option value="custom">Custom quote request</option>
-                    </select>
-                  </div>
-                )}
-
                 <div>
                   <label className="mb-2 block text-[0.7rem] uppercase tracking-[0.18em] text-ink/50">
-                    Project Details
+                    Message
                   </label>
                   <textarea
                     name="message"
                     value={form.message}
                     onChange={handleChange}
                     rows={6}
-                    placeholder="Tell us what you need help with, what kind of site you want, and any important details we should know."
+                    placeholder="Tell us what you want to ask, discuss, or clarify."
                     className="w-full rounded-[4px] border border-warmbrown-pale bg-cream px-4 py-4 text-[0.96rem] leading-8 text-ink outline-none transition placeholder:text-ink/35 focus:border-warmbrown"
                   />
                 </div>
@@ -266,17 +210,17 @@ export default function Contact() {
       <section className="bg-ink px-5 py-20 text-center text-softwhite sm:px-6">
         <div className="mx-auto max-w-4xl">
           <h2 className="font-display text-[2.4rem] leading-[1] sm:text-[3.3rem]">
-            Need something beyond the packages?
+            Ready to order instead?
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-[1rem] leading-8 text-softwhite/62">
-            We also take on custom quote projects when the scope needs something more tailored.
+            If you already know what you want, head to checkout to choose a package, add extras, and pay online.
           </p>
           <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
             <Link
-              to="/services"
+              to="/checkout"
               className="rounded-full border border-softwhite/20 px-8 py-4 text-center text-[0.76rem] font-medium uppercase tracking-[0.2em] text-softwhite transition hover:bg-softwhite hover:text-ink"
             >
-              Back to Services
+              Go to Checkout
             </Link>
             <Link
               to="/about"
@@ -304,8 +248,3 @@ function Field({ label, ...props }) {
     </div>
   )
 }
-
-// Place these at the top of your file or in a config file
-const EMAILJS_SERVICE_ID = 'service_8o5wypm' // Your actual service ID
-const EMAILJS_TEMPLATE_ID = 'template_jmz0a4f' // Updated to your new template ID
-const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY' // Fill in from EmailJS dashboard

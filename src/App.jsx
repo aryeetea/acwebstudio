@@ -9,6 +9,9 @@ import Portfolio from './pages/Portfolio'
 import Admin from './pages/Admin'
 import Contact from './pages/Contact'
 import Faq from './pages/Faq'
+import Checkout from './pages/Checkout'
+import CheckoutSuccess from './pages/CheckoutSuccess'
+import CheckoutCancel from './pages/CheckoutCancel'
 // Team import removed
 export default function App() {
   return (
@@ -21,7 +24,10 @@ export default function App() {
         <Route path="/services"  element={<Services />} />
         <Route path="/portfolio" element={<Portfolio />} />
         <Route path="/admin"     element={<Admin />} />
-        <Route path="/orders"    element={<Navigate to="/admin" replace />} />
+        <Route path="/checkout"  element={<Checkout />} />
+        <Route path="/checkout/success" element={<CheckoutSuccess />} />
+        <Route path="/checkout/cancel" element={<CheckoutCancel />} />
+        <Route path="/orders"    element={<Navigate to="/checkout" replace />} />
         <Route path="/faq"       element={<Faq />} />
         <Route path="/contact"   element={<Contact />} />
       </Routes>

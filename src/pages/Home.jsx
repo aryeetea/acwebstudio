@@ -78,10 +78,10 @@ export default function Home() {
           </p>
           <div className="animate-fade-up mt-10 flex flex-col gap-4 opacity-0 [animation-delay:360ms] sm:flex-row">
             <Link
-              to="/services"
+              to="/checkout"
               className="rounded-full bg-ink px-8 py-4 text-center text-[0.76rem] font-medium uppercase tracking-[0.2em] text-softwhite transition hover:-translate-y-0.5 hover:bg-warmbrown"
             >
-              View Packages
+              Place an Order
             </Link>
             <Link
               to="/portfolio"
@@ -160,6 +160,16 @@ export default function Home() {
                     </li>
                   ))}
                 </ul>
+                <Link
+                  to={`/checkout?package=${service.tier.toLowerCase().includes('professional') ? 'professional' : service.tier.toLowerCase().includes('signature') ? 'signature' : 'starter'}`}
+                  className={`mt-8 inline-flex w-full items-center justify-center rounded-full px-6 py-4 text-center text-[0.75rem] font-medium uppercase tracking-[0.18em] transition hover:-translate-y-0.5 ${
+                    service.featured
+                      ? 'bg-softwhite text-ink hover:bg-warmbrown hover:text-softwhite'
+                      : 'bg-ink text-softwhite hover:bg-warmbrown'
+                  }`}
+                >
+                  Order This Package
+                </Link>
               </article>
             ))}
           </div>
@@ -221,10 +231,10 @@ export default function Home() {
           </p>
           <div className="mt-10">
             <Link
-              to="/contact"
+              to="/checkout"
               className="inline-flex rounded-full bg-softwhite px-8 py-4 text-[0.76rem] font-medium uppercase tracking-[0.2em] text-warmbrown transition hover:-translate-y-0.5 hover:bg-ink hover:text-softwhite"
             >
-              Start Your Project
+              Go to Checkout
             </Link>
           </div>
         </div>

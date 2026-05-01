@@ -83,3 +83,28 @@ export const packageOptions = packages.map(pkg => ({
 }))
 
 export const packageMap = Object.fromEntries(packages.map(pkg => [pkg.slug, pkg]))
+
+function parsePricePart(value) {
+  const amount = Number.parseInt(value.replace(/[^\d]/g, ''), 10)
+  return Number.isFinite(amount) ? amount : 0
+}
+
+export function getPriceRangeFromLabel(label) {
+  if (typeof label !== 'string') {
+    return [0, 0]
+  }
+
+  const normalized = label.replace(/\s+/g, ' ').trim()
+  const parts = normalized.match(/\$[\d,]+/g) || []
+
+  if (parts.length >= 2) {
+    return [parsePricePart(parts[0]), parsePricePart(parts[1])]
+  }
+
+  if (parts.length === 1) {
+    const value = parsePricePart(parts[0])
+    return /\+$/.test(normalized) ? [value, value] : [value, value]
+  }
+
+  return [0, 0]
+}

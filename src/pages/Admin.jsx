@@ -3,9 +3,11 @@ import {
   createPortfolioProject,
   deletePortfolioProject,
   fetchAdminContactInquiries,
+  fetchAdminOrders,
   fetchAdminStatus,
   fetchPortfolioProjects,
   loginAdmin,
+  updateAdminOrderStatus,
   updatePortfolioProjectPackage,
   verifyAdminSession,
 } from '../lib/api'
@@ -31,6 +33,20 @@ function formatInquiryDate(value) {
   }
 }
 
+function formatCurrencyRange(min, max) {
+  if (!min && !max) return 'Custom quote'
+  if (min === max) return `$${min}`
+  return `$${min} - $${max}`
+}
+
+function formatCurrency(amount) {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    maximumFractionDigits: 0,
+  }).format(amount || 0)
+}
+
 export default function Admin() {
   const [token, setToken] = useState(getStoredToken)
   const [adminReady, setAdminReady] = useState(false)
@@ -39,11 +55,13 @@ export default function Admin() {
   const [urlInput, setUrlInput] = useState('')
   const [packageInput, setPackageInput] = useState('')
   const [projects, setProjects] = useState([])
+  const [orders, setOrders] = useState([])
   const [inquiries, setInquiries] = useState([])
   const [loading, setLoading] = useState(true)
   const [authChecking, setAuthChecking] = useState(true)
   const [submitting, setSubmitting] = useState(false)
   const [updatingProjectId, setUpdatingProjectId] = useState('')
+  const [updatingOrderId, setUpdatingOrderId] = useState('')
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
   const urlRef = useRef(null)
@@ -73,13 +91,15 @@ export default function Admin() {
           return
         }
 
-        const [items, savedInquiries] = await Promise.all([
+        const [items, savedOrders, savedInquiries] = await Promise.all([
           fetchPortfolioProjects(),
+          fetchAdminOrders(token),
           fetchAdminContactInquiries(token),
         ])
 
         if (!cancelled) {
           setProjects(items)
+          setOrders(savedOrders)
           setInquiries(savedInquiries)
         }
       } catch (loadError) {
@@ -200,11 +220,32 @@ export default function Admin() {
     }
   }
 
+  async function handleOrderDecision(id, status) {
+    setUpdatingOrderId(id)
+    setError('')
+    setMessage('')
+
+    try {
+      const updatedOrder = await updateAdminOrderStatus(id, status, token)
+      setOrders(current => current.map(order => (order.id === id ? updatedOrder : order)))
+      setMessage(
+        status === 'accepted'
+          ? 'Order accepted and customer notified.'
+          : 'Order declined and customer notified.'
+      )
+    } catch (updateError) {
+      setError(updateError.message)
+    } finally {
+      setUpdatingOrderId('')
+    }
+  }
+
   function handleLogout() {
     localStorage.removeItem(ADMIN_TOKEN_KEY)
     setToken('')
     setActiveView('projects')
     setProjects([])
+    setOrders([])
     setInquiries([])
     setCode('')
     setMessage('Signed out.')
@@ -440,18 +481,132 @@ export default function Admin() {
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <p className="text-[0.72rem] font-medium uppercase tracking-[0.24em] text-warmbrown">Orders</p>
-                <h2 className="mt-4 font-display text-[2.2rem] leading-none text-ink">Client inquiries submitted from the contact form.</h2>
+                <h2 className="mt-4 font-display text-[2.2rem] leading-none text-ink">Placed website orders and general inquiries.</h2>
               </div>
               <span className="rounded-full bg-cream px-4 py-2 text-[0.7rem] uppercase tracking-[0.16em] text-ink/60">
-                {loading ? 'Loading...' : `${inquiries.length} total`}
+                {loading ? 'Loading...' : `${orders.length} orders`}
               </span>
             </div>
 
             <p className="mt-5 max-w-3xl text-[1rem] leading-8 text-ink/65">
-              New leads now live inside the admin dashboard so everything private stays in one place.
+              Structured orders now arrive with package selections, add-ons, deposit amounts, and payment state so the site behaves more like a storefront.
             </p>
 
-            <div className="mt-8">
+            <div className="mt-8 space-y-8">
+              <div>
+                <div className="mb-4 flex items-center justify-between gap-4">
+                  <h3 className="font-display text-[1.8rem] text-ink">Orders</h3>
+                  <span className="rounded-full bg-cream px-4 py-2 text-[0.68rem] uppercase tracking-[0.16em] text-ink/60">
+                    {loading ? 'Loading...' : `${orders.length} total`}
+                  </span>
+                </div>
+                {loading ? (
+                  <div className="rounded-[4px] border border-dashed border-warmbrown-pale bg-cream px-6 py-10 text-center text-ink/60">
+                    Loading orders...
+                  </div>
+                ) : orders.length === 0 ? (
+                  <div className="rounded-[4px] border border-dashed border-warmbrown-pale bg-cream px-6 py-10 text-center text-ink/60">
+                    No orders yet.
+                  </div>
+                ) : (
+                  <div className="grid gap-5">
+                    {orders.map(order => (
+                      <article key={order.id} className="rounded-[4px] border border-warmbrown-pale bg-cream p-5">
+                        <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+                          <div className="min-w-0">
+                            <div className="flex flex-wrap items-center gap-3">
+                              <h4 className="font-display text-[1.8rem] text-ink">
+                                {order.firstName} {order.lastName}
+                              </h4>
+                              <span className="rounded-full bg-softwhite px-3 py-1 text-[0.66rem] uppercase tracking-[0.14em] text-warmbrown">
+                                {order.status}
+                              </span>
+                            </div>
+                            <div className="mt-3 flex flex-wrap gap-4 text-sm text-ink/60">
+                              <span>{formatInquiryDate(order.createdAt)}</span>
+                              <a href={`mailto:${order.email}`} className="text-warmbrown transition hover:text-ink">
+                                {order.email}
+                              </a>
+                              <span>{order.businessName}</span>
+                            </div>
+
+                            <div className="mt-5 grid gap-4 md:grid-cols-2">
+                              <div className="rounded-[4px] border border-warmbrown-pale bg-softwhite px-4 py-4">
+                                <div className="text-[0.68rem] uppercase tracking-[0.16em] text-ink/48">Package</div>
+                                <div className="mt-2 text-[1rem] text-ink">{order.packageName}</div>
+                                <div className="mt-1 text-sm text-warmbrown">{order.packagePrice}</div>
+                              </div>
+                              <div className="rounded-[4px] border border-warmbrown-pale bg-softwhite px-4 py-4">
+                                <div className="text-[0.68rem] uppercase tracking-[0.16em] text-ink/48">Estimated total</div>
+                                <div className="mt-2 text-[1rem] text-ink">{formatCurrencyRange(order.totalMin, order.totalMax)}</div>
+                                <div className="mt-1 text-sm text-ink/55">{order.timeline || 'No timeline provided'}</div>
+                              </div>
+                              <div className="rounded-[4px] border border-warmbrown-pale bg-softwhite px-4 py-4">
+                                <div className="text-[0.68rem] uppercase tracking-[0.16em] text-ink/48">Deposit paid online</div>
+                                <div className="mt-2 text-[1rem] text-ink">{formatCurrency(order.amountDueNow)}</div>
+                                <div className="mt-1 text-sm text-ink/55">Session: {order.stripeSessionId || 'Not available'}</div>
+                              </div>
+                            </div>
+
+                            <div className="mt-5 grid gap-4 md:grid-cols-2">
+                              <div>
+                                <div className="text-[0.68rem] uppercase tracking-[0.16em] text-ink/48">Add-ons</div>
+                                <div className="mt-2 flex flex-wrap gap-2">
+                                  {order.addons?.length ? order.addons.map(addon => (
+                                    <span key={addon.id || addon.label} className="rounded-full bg-softwhite px-3 py-1 text-[0.66rem] uppercase tracking-[0.14em] text-warmbrown">
+                                      {addon.label} {addon.price ? `(${addon.price})` : ''}
+                                    </span>
+                                  )) : (
+                                    <span className="text-sm text-ink/55">No add-ons selected</span>
+                                  )}
+                                </div>
+                              </div>
+                              <div>
+                                <div className="text-[0.68rem] uppercase tracking-[0.16em] text-ink/48">Website</div>
+                                <div className="mt-2 text-sm text-ink/70">{order.website || 'Not provided'}</div>
+                              </div>
+                            </div>
+
+                            <div className="mt-5">
+                              <div className="text-[0.68rem] uppercase tracking-[0.16em] text-ink/48">Project notes</div>
+                              <p className="mt-2 whitespace-pre-line text-[0.95rem] leading-7 text-ink/70">
+                                {order.notes || 'No project notes included.'}
+                              </p>
+                            </div>
+
+                            <div className="mt-5 flex flex-wrap gap-3">
+                              <button
+                                type="button"
+                                onClick={() => handleOrderDecision(order.id, 'accepted')}
+                                disabled={updatingOrderId === order.id || order.status === 'accepted'}
+                                className="rounded-full bg-ink px-5 py-3 text-[0.7rem] font-medium uppercase tracking-[0.18em] text-softwhite transition hover:bg-warmbrown disabled:cursor-not-allowed disabled:opacity-60"
+                              >
+                                {updatingOrderId === order.id ? 'Updating...' : order.status === 'accepted' ? 'Accepted' : 'Accept Order'}
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => handleOrderDecision(order.id, 'declined')}
+                                disabled={updatingOrderId === order.id || order.status === 'declined'}
+                                className="rounded-full border border-red-200 px-5 py-3 text-[0.7rem] font-medium uppercase tracking-[0.18em] text-red-700 transition hover:border-red-400 hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-60"
+                              >
+                                {updatingOrderId === order.id ? 'Updating...' : order.status === 'declined' ? 'Declined' : 'Decline Order'}
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <div>
+                <div className="mb-4 flex items-center justify-between gap-4">
+                  <h3 className="font-display text-[1.8rem] text-ink">General inquiries</h3>
+                  <span className="rounded-full bg-cream px-4 py-2 text-[0.68rem] uppercase tracking-[0.16em] text-ink/60">
+                    {loading ? 'Loading...' : `${inquiries.length} total`}
+                  </span>
+                </div>
               {loading ? (
                 <div className="rounded-[4px] border border-dashed border-warmbrown-pale bg-cream px-6 py-10 text-center text-ink/60">
                   Loading inquiries...
@@ -494,6 +649,7 @@ export default function Admin() {
                   </table>
                 </div>
               )}
+              </div>
             </div>
           </div>
         )}

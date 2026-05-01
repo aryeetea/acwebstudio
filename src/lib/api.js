@@ -64,6 +64,10 @@ function getFriendlyErrorMessage(payload, fallback) {
     return 'Your Supabase tables are not ready yet. Create the required SQL tables first.'
   }
 
+  if (/orders/i.test(raw) && /column .* does not exist/i.test(raw)) {
+    return 'Your orders table is missing one or more required columns. Update it to match the schema in the README.'
+  }
+
   if (/bucket .* not found|portfolio-previews/i.test(raw) && /not found|does not exist/i.test(raw)) {
     return 'Your Supabase storage bucket is missing. Create the `portfolio-previews` bucket first.'
   }
@@ -94,6 +98,10 @@ function getFriendlyErrorMessage(payload, fallback) {
 
   if (/admin access code is not configured/i.test(raw)) {
     return 'Admin access is not configured yet. Add `ADMIN_ACCESS_CODE` to `.env.local`, then restart the API server.'
+  }
+
+  if (/stripe is not configured/i.test(raw)) {
+    return 'Payments are not configured yet. Add your Stripe secret key to the server environment first.'
   }
 
   if (/email is required/i.test(raw)) {
@@ -289,6 +297,50 @@ export async function createContactInquiry(form) {
   return payload
 }
 
+export async function createCheckoutSession(order) {
+  let response
+
+  try {
+    response = await fetch(getApiUrl('/api/checkout/session'), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(order),
+    })
+  } catch {
+    throw new Error(getNetworkErrorMessage('Could not place your order.'))
+  }
+
+  const payload = await readJson(response)
+
+  if (!response.ok) {
+    throw new Error(getFriendlyErrorMessage(payload, 'Could not place your order right now.'))
+  }
+
+  return payload
+}
+
+export async function confirmOrderPayment(sessionId) {
+  let response
+
+  try {
+    response = await fetch(getApiUrl('/api/orders/confirm'), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sessionId }),
+    })
+  } catch {
+    throw new Error(getNetworkErrorMessage('Could not confirm your payment.'))
+  }
+
+  const payload = await readJson(response)
+
+  if (!response.ok) {
+    throw new Error(getFriendlyErrorMessage(payload, 'Could not confirm your payment right now.'))
+  }
+
+  return payload
+}
+
 export async function fetchAdminContactInquiries(token) {
   let response
 
@@ -308,4 +360,50 @@ export async function fetchAdminContactInquiries(token) {
   }
 
   return response.json()
+}
+
+export async function fetchAdminOrders(token) {
+  let response
+
+  try {
+    response = await fetch(getApiUrl('/api/admin/orders'), {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+  } catch {
+    throw new Error(getNetworkErrorMessage('Could not load orders.'))
+  }
+
+  if (!response.ok) {
+    const payload = await readJson(response)
+    throw new Error(getFriendlyErrorMessage(payload, 'Could not load orders right now.'))
+  }
+
+  return response.json()
+}
+
+export async function updateAdminOrderStatus(id, status, token) {
+  let response
+
+  try {
+    response = await fetch(getApiUrl(`/api/admin/orders/${id}/status`), {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ status }),
+    })
+  } catch {
+    throw new Error(getNetworkErrorMessage('Could not update this order.'))
+  }
+
+  const payload = await readJson(response)
+
+  if (!response.ok) {
+    throw new Error(getFriendlyErrorMessage(payload, 'Could not update this order right now.'))
+  }
+
+  return payload
 }
