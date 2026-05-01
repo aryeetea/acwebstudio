@@ -37,24 +37,24 @@ export default function AboutUs() {
       </section>
 
       <section className="px-5 pb-24 sm:px-6">
-        <div className="mx-auto grid max-w-6xl gap-16 lg:grid-cols-[0.88fr_1.12fr]">
-          <div className="lg:sticky lg:top-28 lg:self-start">
-            <PortraitCard />
-          </div>
+        <div className="mx-auto max-w-6xl">
+          <PortraitCard />
 
-          <div className="space-y-7 text-[1rem] leading-8 text-ink/68 sm:text-[1.05rem]">
-            <p>
-              ACE Web Studio was built for founders and small business owners who want a website they can feel proud to send people to. We believe premium does not have to mean cold, and minimal does not have to mean generic.
-            </p>
-            <p>
-              Our studio works across three connected disciplines: web development, UI/UX design, and art direction. That mix helps us shape websites that are not only functional, but also visually confident and aligned with the brand behind them.
-            </p>
-            <p>
-              Our work is shaped by an editorial mindset: strong hierarchy, generous spacing, confident typography, and a sense of restraint that lets the right details stand out. Before anything is developed, we think about how the brand should feel and what the visitor should understand.
-            </p>
-            <p>
-              The end result is a custom website that feels calm, refined, and strategic, with enough personality to feel alive. It is built to support trust, communicate quality, and help the business behind it look established online.
-            </p>
+          <div className="mt-16 space-y-7 text-[1rem] leading-8 text-ink/68 sm:text-[1.05rem]">
+            <div className="mx-auto max-w-4xl space-y-7">
+              <p>
+                ACE Web Studio was built for founders and small business owners who want a website they can feel proud to send people to. We believe premium does not have to mean cold, and minimal does not have to mean generic.
+              </p>
+              <p>
+                Our studio works across three connected disciplines: web development, UI/UX design, and art direction. That mix helps us shape websites that are not only functional, but also visually confident and aligned with the brand behind them.
+              </p>
+              <p>
+                Our work is shaped by an editorial mindset: strong hierarchy, generous spacing, confident typography, and a sense of restraint that lets the right details stand out. Before anything is developed, we think about how the brand should feel and what the visitor should understand.
+              </p>
+              <p>
+                The end result is a custom website that feels calm, refined, and strategic, with enough personality to feel alive. It is built to support trust, communicate quality, and help the business behind it look established online.
+              </p>
+            </div>
 
             <div className="rounded-[4px] border border-warmbrown-pale bg-cream px-6 py-6">
               <div className="text-[0.72rem] uppercase tracking-[0.22em] text-warmbrown">Studio Team</div>
