@@ -92,6 +92,10 @@ function getFriendlyErrorMessage(payload, fallback) {
   }
 
   if (/supabase is not configured/i.test(raw)) {
+    if (typeof window !== 'undefined' && !/^(localhost|127\.0\.0\.1)$/i.test(window.location.hostname)) {
+      return 'Supabase is not connected on the deployed server yet. Add the required Supabase server environment variables in your hosting dashboard and redeploy.'
+    }
+
     return 'Supabase is not connected yet. Add your Supabase keys to the local environment first.'
   }
 
