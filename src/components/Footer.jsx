@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
           <div>
             <div className="text-[0.7rem] uppercase tracking-[0.24em] text-warmbrown-light">Ready to look established online?</div>
-            <h3 className="mt-4 max-w-2xl font-display text-[2.3rem] leading-[0.98] text-softwhite sm:text-[3rem]">
+            <h3 className="text-balance mt-4 max-w-2xl font-display text-[2rem] leading-[0.98] text-softwhite sm:text-[3rem]">
               A more aesthetic website should still feel credible, clear, and ready to sell.
             </h3>
           </div>
@@ -64,8 +64,8 @@ export default function Footer() {
           <div className="mt-5 grid gap-3 text-sm uppercase tracking-[0.12em] text-softwhite/58">
             <Link className="transition hover:text-softwhite" to="/contact">Start a Project</Link>
             <Link className="transition hover:text-softwhite" to="/faq">FAQ</Link>
-            <a className="transition hover:text-softwhite" href="mailto:aileen.aryeetey@outlook.com">aileen.aryeetey@outlook.com</a>
-            <a className="transition hover:text-softwhite" href="mailto:cowusuforkuo@gmail.com">cowusuforkuo@gmail.com</a>
+            <a className="text-anywhere transition hover:text-softwhite" href="mailto:aileen.aryeetey@outlook.com">aileen.aryeetey@outlook.com</a>
+            <a className="text-anywhere transition hover:text-softwhite" href="mailto:cowusuforkuo@gmail.com">cowusuforkuo@gmail.com</a>
             <Link className="transition hover:text-softwhite" to="/admin">Admin</Link>
           </div>
         </div>

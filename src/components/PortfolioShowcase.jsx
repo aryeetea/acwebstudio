@@ -67,11 +67,11 @@ export default function PortfolioShowcase({ projects, loading }) {
                   {project.title}
                 </div>
               )}
-              <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-3 bg-gradient-to-t from-ink/80 via-ink/20 to-transparent p-5">
+              <div className="absolute inset-x-0 bottom-0 flex flex-col items-start gap-2 bg-gradient-to-t from-ink/80 via-ink/20 to-transparent p-4 sm:flex-row sm:items-center sm:justify-between sm:gap-3 sm:p-5">
                 <span className="rounded-full border border-softwhite/18 bg-softwhite/12 px-3 py-1 text-[0.62rem] uppercase tracking-[0.18em] text-softwhite/90 backdrop-blur-sm">
                   {project.packageType}
                 </span>
-                <span className="text-[0.68rem] uppercase tracking-[0.18em] text-softwhite/70">
+                <span className="text-anywhere text-[0.68rem] uppercase tracking-[0.18em] text-softwhite/70 sm:text-right">
                   {new URL(project.url).hostname.replace(/^www\./, '')}
                 </span>
               </div>
@@ -89,12 +89,12 @@ export default function PortfolioShowcase({ projects, loading }) {
                 ))}
               </div>
 
-              <h3 className="mt-5 font-display text-[1.8rem] leading-none text-ink">{project.title}</h3>
+              <h3 className="text-balance mt-5 font-display text-[1.65rem] leading-none text-ink sm:text-[1.8rem]">{project.title}</h3>
               <p className="mt-4 text-[0.96rem] leading-8 text-ink/65">
                 {project.description || project.summary}
               </p>
 
-              <div className="mt-6 flex items-center justify-between gap-4">
+              <div className="mt-6 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
                 <a
                   href={project.url}
                   target="_blank"

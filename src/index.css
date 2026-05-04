@@ -18,11 +18,13 @@
   }
 
   html {
+    overflow-x: clip;
     scroll-behavior: smooth;
   }
 
   body {
     @apply m-0 bg-cream font-sans text-ink antialiased;
+    overflow-x: clip;
     background-image:
       radial-gradient(circle at top left, rgba(209, 173, 132, 0.22), transparent 28%),
       radial-gradient(circle at 85% 14%, rgba(117, 88, 54, 0.12), transparent 24%),
@@ -50,6 +52,17 @@
 
   a {
     @apply text-inherit no-underline;
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+  }
+
+  input,
+  textarea,
+  select {
+    min-width: 0;
   }
 }
 
@@ -109,6 +122,14 @@
 
 .editorial-kicker {
   letter-spacing: 0.26em;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.text-anywhere {
+  overflow-wrap: anywhere;
 }
 
 @keyframes fade-up {

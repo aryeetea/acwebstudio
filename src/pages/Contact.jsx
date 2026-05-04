@@ -84,7 +84,7 @@ export default function Contact() {
 
   return (
     <>
-      <section className="relative overflow-hidden px-5 pb-20 pt-36 sm:px-6 sm:pt-40">
+      <section className="relative overflow-hidden px-4 pb-20 pt-32 sm:px-6 sm:pt-40">
         <div className="absolute inset-x-0 top-0 h-[520px] bg-[radial-gradient(circle_at_top_right,rgba(196,168,130,0.24),transparent_36%),radial-gradient(circle_at_left,rgba(139,111,78,0.12),transparent_28%)]" />
         <div className="relative mx-auto max-w-6xl">
           <SectionIntro
@@ -95,25 +95,25 @@ export default function Contact() {
         </div>
       </section>
 
-      <section className="px-5 pb-24 sm:px-6">
+      <section className="px-4 pb-20 sm:px-6 sm:pb-24">
         <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.88fr_1.12fr]">
           <div className="space-y-6">
             <div className="rounded-[30px] border border-warmbrown/12 bg-softwhite p-7 shadow-[0_24px_56px_rgba(17,17,16,0.06)]">
               <div className="text-[0.72rem] uppercase tracking-[0.24em] text-warmbrown">Contact Details</div>
-              <h2 className="mt-4 font-display text-[2.3rem] leading-none text-ink">Let’s talk about your website.</h2>
+              <h2 className="text-balance mt-4 font-display text-[2.05rem] leading-none text-ink sm:text-[2.3rem]">Let’s talk about your website.</h2>
               <p className="mt-5 text-[0.96rem] leading-8 text-ink/64">
                 Whether you are ready to book or just want to ask a few questions, this is the best place to reach ACE Web Studio.
               </p>
               <div className="mt-7 divide-y divide-warmbrown-pale">
                 <div className="pb-5">
                   <div className="text-[0.68rem] uppercase tracking-[0.14em] text-ink/45">Aileen — Web Development</div>
-                  <a href="mailto:aileen.aryeetey@outlook.com" className="mt-1.5 block text-[0.95rem] text-warmbrown transition hover:text-ink">
+                  <a href="mailto:aileen.aryeetey@outlook.com" className="text-anywhere mt-1.5 block text-[0.95rem] text-warmbrown transition hover:text-ink">
                     aileen.aryeetey@outlook.com
                   </a>
                 </div>
                 <div className="py-5">
                   <div className="text-[0.68rem] uppercase tracking-[0.14em] text-ink/45">Cynthia — UI/UX Design</div>
-                  <a href="mailto:cowusuforkuo@gmail.com" className="mt-1.5 block text-[0.95rem] text-warmbrown transition hover:text-ink">
+                  <a href="mailto:cowusuforkuo@gmail.com" className="text-anywhere mt-1.5 block text-[0.95rem] text-warmbrown transition hover:text-ink">
                     cowusuforkuo@gmail.com
                   </a>
                 </div>
@@ -146,7 +146,7 @@ export default function Contact() {
             {sent ? (
               <div className="flex min-h-[420px] flex-col items-center justify-center text-center">
                 <div className="font-display text-[4rem] leading-none text-warmbrown">✓</div>
-                <h3 className="mt-5 font-display text-[2.2rem] text-ink">Request received</h3>
+                <h3 className="text-balance mt-5 font-display text-[2rem] text-ink sm:text-[2.2rem]">Request received</h3>
                 <p className="mt-4 max-w-xl text-[1rem] leading-8 text-ink/64">
                   Thanks for reaching out. We will review your request and confirm the best next step within 24 hours.
                 </p>
@@ -198,7 +198,7 @@ export default function Contact() {
         </div>
       </section>
 
-      <section className="bg-softwhite px-5 py-24 sm:px-6">
+      <section className="bg-softwhite px-4 py-20 sm:px-6 sm:py-24">
         <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.92fr_1.08fr]">
           <div>
             <SectionIntro
@@ -211,9 +211,9 @@ export default function Contact() {
         </div>
       </section>
 
-      <section className="bg-ink px-5 py-20 text-center text-softwhite sm:px-6">
+      <section className="bg-ink px-4 py-16 text-center text-softwhite sm:px-6 sm:py-20">
         <div className="mx-auto max-w-4xl">
-          <h2 className="font-display text-[2.4rem] leading-[1] sm:text-[3.3rem]">
+          <h2 className="text-balance font-display text-[2.15rem] leading-[1] sm:text-[3.3rem]">
             Ready to order instead?
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-[1rem] leading-8 text-softwhite/62">

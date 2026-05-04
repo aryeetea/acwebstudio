@@ -19,7 +19,7 @@ const comparisons = [
 export default function Services() {
   return (
     <>
-      <section className="relative overflow-hidden px-5 pb-20 pt-36 sm:px-6 sm:pt-40">
+      <section className="relative overflow-hidden px-4 pb-20 pt-32 sm:px-6 sm:pt-40">
         <div className="absolute inset-x-0 top-0 h-[520px] bg-[radial-gradient(circle_at_top_right,rgba(196,168,130,0.24),transparent_36%),radial-gradient(circle_at_left,rgba(139,111,78,0.12),transparent_28%)]" />
         <div className="relative mx-auto max-w-6xl">
           <SectionIntro
@@ -30,7 +30,7 @@ export default function Services() {
         </div>
       </section>
 
-      <section className="px-5 pb-24 sm:px-6">
+      <section className="px-4 pb-20 sm:px-6 sm:pb-24">
         <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-3">
           {packages.map(pkg => (
             <article
@@ -41,10 +41,10 @@ export default function Services() {
             >
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <div className={`text-[0.7rem] uppercase tracking-[0.22em] ${pkg.featured ? 'text-warmbrown-light' : 'text-warmbrown'}`}>
-                    {pkg.tier}
-                  </div>
-                  <h2 className="mt-4 font-display text-[2.2rem] leading-none">{pkg.name}</h2>
+                <div className={`text-[0.7rem] uppercase tracking-[0.22em] ${pkg.featured ? 'text-warmbrown-light' : 'text-warmbrown'}`}>
+                  {pkg.tier}
+                </div>
+                  <h2 className="text-balance mt-4 font-display text-[2rem] leading-none sm:text-[2.2rem]">{pkg.name}</h2>
                 </div>
                 {pkg.featured && (
                   <span className="rounded-full border border-softwhite/10 bg-softwhite/8 px-3 py-1 text-[0.62rem] uppercase tracking-[0.18em] text-softwhite/80">
@@ -84,7 +84,7 @@ export default function Services() {
                 </div>
                 <div className="mt-4 grid gap-3">
                   {pkg.addons.map(addon => (
-                    <div key={addon.id} className={`flex items-start justify-between gap-4 text-sm ${pkg.featured ? 'text-softwhite/72' : 'text-ink/62'}`}>
+                    <div key={addon.id} className={`flex flex-col items-start gap-1 text-sm sm:flex-row sm:items-start sm:justify-between sm:gap-4 ${pkg.featured ? 'text-softwhite/72' : 'text-ink/62'}`}>
                       <span>{addon.label}</span>
                       <span className={pkg.featured ? 'text-warmbrown-light' : 'text-warmbrown'}>{addon.price}</span>
                     </div>
@@ -107,7 +107,7 @@ export default function Services() {
         </div>
       </section>
 
-      <section className="bg-cream px-5 py-24 sm:px-6">
+      <section className="bg-cream px-4 py-20 sm:px-6 sm:py-24">
         <div className="mx-auto max-w-6xl rounded-[4px] border border-warmbrown-pale bg-softwhite p-8 shadow-[0_18px_40px_rgba(17,17,16,0.05)] sm:p-10">
           <div className="grid gap-8 lg:grid-cols-[1fr_0.9fr]">
             <div>
@@ -134,13 +134,13 @@ export default function Services() {
         </div>
       </section>
 
-      <section className="bg-softwhite px-5 py-24 sm:px-6">
+      <section className="bg-softwhite px-4 py-20 sm:px-6 sm:py-24">
         <div className="mx-auto max-w-6xl overflow-hidden rounded-[30px] border border-warmbrown-pale shadow-[0_24px_56px_rgba(17,17,16,0.06)]">
           <div className="border-b border-warmbrown-pale bg-cream px-6 py-5 sm:px-8">
             <h2 className="font-display text-[2rem] text-ink sm:text-[2.3rem]">Package Comparison</h2>
           </div>
           <div className="overflow-x-auto">
-            <table className="min-w-full border-collapse text-left">
+            <table className="min-w-[720px] border-collapse text-left">
               <thead>
                 <tr className="border-b border-warmbrown-pale bg-softwhite">
                   <th className="px-6 py-4 text-[0.7rem] uppercase tracking-[0.2em] text-ink/50 sm:px-8">Feature</th>
@@ -166,10 +166,10 @@ export default function Services() {
         </div>
       </section>
 
-      <section className="px-5 py-24 sm:px-6">
+      <section className="px-4 py-20 sm:px-6 sm:py-24">
         <div className="mx-auto max-w-4xl rounded-[30px] border border-warmbrown/12 bg-cream px-6 py-14 text-center shadow-[0_24px_56px_rgba(17,17,16,0.06)] sm:px-10">
           <div className="text-[0.72rem] font-medium uppercase tracking-[0.24em] text-warmbrown">Monthly Maintenance</div>
-          <h2 className="mt-5 font-display text-[2.4rem] leading-[1] text-ink sm:text-[3.1rem]">
+          <h2 className="text-balance mt-5 font-display text-[2.15rem] leading-[1] text-ink sm:text-[3.1rem]">
             $80 per month after the first 3 months of free support.
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-[1rem] leading-8 text-ink/66">
@@ -192,10 +192,10 @@ export default function Services() {
         </div>
       </section>
 
-      <section className="bg-softwhite px-5 pb-24 sm:px-6">
+      <section className="bg-softwhite px-4 pb-20 sm:px-6 sm:pb-24">
         <div className="mx-auto max-w-4xl rounded-[30px] border border-warmbrown/12 bg-softwhite px-6 py-14 text-center shadow-[0_24px_56px_rgba(17,17,16,0.06)] sm:px-10">
           <div className="text-[0.72rem] font-medium uppercase tracking-[0.24em] text-warmbrown">How Payment Works</div>
-          <h2 className="mt-5 font-display text-[2.4rem] leading-[1] text-ink sm:text-[3.1rem]">
+          <h2 className="text-balance mt-5 font-display text-[2.15rem] leading-[1] text-ink sm:text-[3.1rem]">
             50% deposit upfront. 50% on completion.
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-[1rem] leading-8 text-ink/66">

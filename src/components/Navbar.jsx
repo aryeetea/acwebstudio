@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
 const links = [
@@ -14,16 +14,20 @@ export default function Navbar() {
   const [open, setOpen] = useState(false)
   const { pathname } = useLocation()
 
+  useEffect(() => {
+    setOpen(false)
+  }, [pathname])
+
   return (
-    <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6">
-      <nav className="mx-auto max-w-6xl rounded-[28px] border border-warmbrown/10 bg-softwhite/78 px-5 py-4 shadow-[0_24px_60px_rgba(17,17,16,0.08)] backdrop-blur-2xl sm:px-7">
-        <div className="flex items-center justify-between gap-6">
+    <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-6 sm:pt-4">
+      <nav className="mx-auto max-w-6xl rounded-[28px] border border-warmbrown/10 bg-softwhite/78 px-3 py-3 shadow-[0_24px_60px_rgba(17,17,16,0.08)] backdrop-blur-2xl sm:px-7 sm:py-4">
+        <div className="flex items-center justify-between gap-3 sm:gap-6">
           <Link to="/" className="shrink-0" aria-label="ACE Web Studio home">
-            <div className="flex items-center gap-3">
-              <div className="rounded-[18px] border border-warmbrown/10 bg-softwhite/90 px-3 py-2 shadow-[0_14px_30px_rgba(17,17,16,0.05)]">
-                <img src="/logo-ace-main.png" alt="ACE Web Studio" className="h-11 w-auto" />
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="rounded-[18px] border border-warmbrown/10 bg-softwhite/90 px-2.5 py-2 shadow-[0_14px_30px_rgba(17,17,16,0.05)] sm:px-3">
+                <img src="/logo-ace-main.png" alt="ACE Web Studio" className="h-9 w-auto sm:h-11" />
               </div>
-              <div className="hidden sm:block">
+              <div className="hidden min-w-0 sm:block">
                 <div className="text-[0.65rem] uppercase tracking-[0.26em] text-warmbrown">ACE Web Studio</div>
                 <div className="mt-1 text-sm text-ink/60">Custom websites for modern brands</div>
               </div>
@@ -59,8 +63,10 @@ export default function Navbar() {
           <button
             type="button"
             onClick={() => setOpen(current => !current)}
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-warmbrown/15 bg-softwhite/90 text-ink md:hidden"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-warmbrown/15 bg-softwhite/90 text-ink md:hidden"
             aria-label="Toggle navigation"
+            aria-expanded={open}
+            aria-controls="mobile-navigation"
           >
             <div className="flex flex-col gap-1.5">
               <span className="h-px w-5 bg-ink" />
@@ -71,12 +77,11 @@ export default function Navbar() {
         </div>
 
         {open && (
-          <div className="mt-5 grid gap-3 border-t border-warmbrown-pale/70 pt-5 md:hidden">
+          <div id="mobile-navigation" className="mt-4 grid gap-3 border-t border-warmbrown-pale/70 pt-4 md:hidden">
             {links.map(link => (
               <Link
                 key={link.to}
                 to={link.to}
-                onClick={() => setOpen(false)}
                 className={`rounded-[18px] px-4 py-3 text-sm uppercase tracking-[0.14em] transition ${
                   pathname === link.to ? 'bg-ink text-softwhite' : 'bg-warmbrown-pale/25 text-ink/60'
                 }`}
@@ -86,7 +91,6 @@ export default function Navbar() {
             ))}
             <Link
               to="/checkout"
-              onClick={() => setOpen(false)}
               className="rounded-[18px] bg-warmbrown px-4 py-3 text-center text-sm uppercase tracking-[0.14em] text-softwhite"
             >
               Start Project

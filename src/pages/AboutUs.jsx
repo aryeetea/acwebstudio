@@ -25,7 +25,7 @@ const process = [
 export default function AboutUs() {
   return (
     <>
-      <section className="relative overflow-hidden px-5 pb-20 pt-36 sm:px-6 sm:pt-40">
+      <section className="relative overflow-hidden px-4 pb-20 pt-32 sm:px-6 sm:pt-40">
         <div className="absolute inset-x-0 top-0 h-[520px] bg-[radial-gradient(circle_at_top_right,rgba(196,168,130,0.24),transparent_36%),radial-gradient(circle_at_left,rgba(139,111,78,0.12),transparent_28%)]" />
         <div className="relative mx-auto max-w-6xl">
           <SectionIntro
@@ -36,7 +36,7 @@ export default function AboutUs() {
         </div>
       </section>
 
-      <section className="px-5 pb-24 sm:px-6">
+      <section className="px-4 pb-20 sm:px-6 sm:pb-24">
         <div className="mx-auto max-w-6xl">
           <PortraitCard />
 
@@ -80,7 +80,7 @@ export default function AboutUs() {
         </div>
       </section>
 
-      <section className="bg-ink px-5 py-24 text-softwhite sm:px-6">
+      <section className="bg-ink px-4 py-20 text-softwhite sm:px-6 sm:py-24">
         <div className="mx-auto max-w-6xl">
           <SectionIntro
             label="Process"
@@ -99,9 +99,9 @@ export default function AboutUs() {
         </div>
       </section>
 
-      <section className="bg-softwhite px-5 py-20 text-center sm:px-6">
+      <section className="bg-softwhite px-4 py-16 text-center sm:px-6 sm:py-20">
         <div className="mx-auto max-w-4xl rounded-[32px] border border-warmbrown/10 bg-cream/80 px-6 py-12 shadow-[0_24px_56px_rgba(17,17,16,0.05)] sm:px-10">
-          <h2 className="font-display text-[2.5rem] leading-[1] text-ink sm:text-[3.5rem]">
+          <h2 className="text-balance font-display text-[2.15rem] leading-[1] text-ink sm:text-[3.5rem]">
             If you want a site that feels both refined and memorable, we should talk.
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-[1rem] leading-8 text-ink/66">

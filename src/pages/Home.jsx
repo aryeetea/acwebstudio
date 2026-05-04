@@ -63,19 +63,19 @@ export default function Home() {
 
   return (
     <>
-      <section className="relative overflow-hidden px-5 pb-24 pt-36 sm:px-6 sm:pt-40">
+      <section className="relative overflow-hidden px-4 pb-20 pt-32 sm:px-6 sm:pb-24 sm:pt-40">
         <div className="absolute inset-x-0 top-0 h-[660px] bg-[radial-gradient(circle_at_top_right,rgba(196,168,130,0.28),transparent_34%),radial-gradient(circle_at_left,rgba(139,111,78,0.12),transparent_26%)]" />
         <div className="relative mx-auto grid max-w-6xl gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
           <div>
-            <div className="animate-fade-up flex items-center gap-3 text-[0.72rem] font-medium uppercase editorial-kicker text-warmbrown">
+            <div className="animate-fade-up flex flex-wrap items-center gap-3 text-[0.68rem] font-medium uppercase editorial-kicker text-warmbrown sm:text-[0.72rem]">
               <span className="rounded-full border border-warmbrown/12 bg-softwhite/80 px-3 py-1 shadow-[0_10px_24px_rgba(23,20,17,0.05)]">Luxury feel</span>
               <span className="h-px w-8 bg-warmbrown/70" />
               <span>Web Design & Development</span>
             </div>
-            <h1 className="animate-fade-up mt-6 max-w-5xl font-display text-[3.25rem] leading-[0.92] text-ink opacity-0 [animation-delay:120ms] sm:text-[4.4rem] lg:text-[5.5rem]">
+            <h1 className="text-balance animate-fade-up mt-6 max-w-5xl font-display text-[2.7rem] leading-[0.94] text-ink opacity-0 [animation-delay:120ms] sm:text-[4.4rem] lg:text-[5.5rem]">
               Aesthetic, professional websites for <span className="italic text-warmbrown">small businesses</span> with ambition.
             </h1>
-            <p className="animate-fade-up mt-7 max-w-3xl text-[1.08rem] leading-8 text-ink/66 opacity-0 [animation-delay:240ms]">
+            <p className="animate-fade-up mt-6 max-w-3xl text-[1rem] leading-7 text-ink/66 opacity-0 [animation-delay:240ms] sm:mt-7 sm:text-[1.08rem] sm:leading-8">
               ACE Web Studio designs and develops custom business websites with thoughtful structure, polished visuals, and a calm premium presentation that still feels clear, trustworthy, and ready to convert.
             </p>
             <div className="animate-fade-up mt-10 flex flex-col gap-4 opacity-0 [animation-delay:360ms] sm:flex-row">
@@ -116,13 +116,13 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-ink px-5 py-20 text-softwhite sm:px-6">
+      <section className="bg-ink px-4 py-16 text-softwhite sm:px-6 sm:py-20">
         <div className="mx-auto grid max-w-6xl gap-14 lg:grid-cols-[1fr_0.95fr]">
           <div>
-            <h2 className="max-w-xl font-display text-[2.5rem] leading-[1] sm:text-[3.4rem]">
+            <h2 className="text-balance max-w-xl font-display text-[2.2rem] leading-[1] sm:text-[3.4rem]">
               Design-first development that feels refined and performs.
             </h2>
-            <div className="mt-10 grid grid-cols-2 gap-8">
+            <div className="mt-10 grid grid-cols-2 gap-6 sm:gap-8">
               {[
                 ['100%', 'Custom-built'],
                 ['3', 'Core packages'],
@@ -143,7 +143,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="px-5 py-24 sm:px-6">
+      <section className="px-4 py-20 sm:px-6 sm:py-24">
         <div className="mx-auto max-w-6xl">
           <SectionIntro
             label="Services"
@@ -199,7 +199,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-softwhite px-5 py-24 sm:px-6">
+      <section className="bg-softwhite px-4 py-20 sm:px-6 sm:py-24">
         <div className="mx-auto max-w-6xl">
           <SectionIntro
             label="Selected Work"
@@ -216,7 +216,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="px-5 py-24 sm:px-6">
+      <section className="px-4 py-20 sm:px-6 sm:py-24">
         <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.92fr_1.08fr]">
           <div>
             <SectionIntro
@@ -244,9 +244,9 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-warmbrown px-5 py-20 text-center text-softwhite sm:px-6">
+      <section className="bg-warmbrown px-4 py-16 text-center text-softwhite sm:px-6 sm:py-20">
         <div className="mx-auto max-w-4xl rounded-[34px] border border-softwhite/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))] px-6 py-12 shadow-[0_28px_70px_rgba(20,16,13,0.2)] sm:px-10">
-          <h2 className="font-display text-[2.5rem] leading-[1] sm:text-[3.6rem]">
+          <h2 className="text-balance font-display text-[2.15rem] leading-[1] sm:text-[3.6rem]">
             Ready for a website that looks as established as your business deserves?
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-[1rem] leading-8 text-softwhite/78">

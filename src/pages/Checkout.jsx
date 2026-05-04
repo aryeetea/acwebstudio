@@ -103,7 +103,7 @@ export default function Checkout() {
 
   return (
     <>
-      <section className="relative overflow-hidden px-5 pb-20 pt-36 sm:px-6 sm:pt-40">
+      <section className="relative overflow-hidden px-4 pb-20 pt-32 sm:px-6 sm:pt-40">
         <div className="absolute inset-x-0 top-0 h-[520px] bg-[radial-gradient(circle_at_right,rgba(196,168,130,0.32),transparent_34%),radial-gradient(circle_at_left,rgba(17,17,16,0.1),transparent_30%)]" />
         <div className="relative mx-auto max-w-6xl">
           <SectionIntro
@@ -114,13 +114,13 @@ export default function Checkout() {
         </div>
       </section>
 
-      <section className="px-5 pb-24 sm:px-6">
+      <section className="px-4 pb-20 sm:px-6 sm:pb-24">
         <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1.05fr_0.95fr]">
           <form onSubmit={handleSubmit} className="rounded-[30px] border border-warmbrown/12 bg-softwhite p-6 shadow-[0_24px_56px_rgba(17,17,16,0.06)] sm:p-8">
-            <div className="flex items-center justify-between gap-4">
+            <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <p className="text-[0.72rem] uppercase tracking-[0.24em] text-warmbrown">Secure Checkout</p>
-                <h2 className="mt-4 font-display text-[2.3rem] leading-none text-ink">Order setup</h2>
+                <h2 className="text-balance mt-4 font-display text-[2.05rem] leading-none text-ink sm:text-[2.3rem]">Order setup</h2>
               </div>
               <div className="rounded-full border border-warmbrown/10 bg-cream px-4 py-2 text-[0.68rem] uppercase tracking-[0.18em] text-ink/60">
                 Stripe payment
@@ -172,7 +172,7 @@ export default function Checkout() {
                   return (
                     <label
                       key={addon.id}
-                      className={`flex cursor-pointer items-start justify-between gap-4 rounded-[22px] border px-4 py-4 transition ${
+                      className={`flex cursor-pointer flex-col items-start gap-3 rounded-[22px] border px-4 py-4 transition sm:flex-row sm:justify-between sm:gap-4 ${
                         checked
                           ? 'border-warmbrown bg-softwhite'
                           : 'border-warmbrown-pale bg-transparent hover:border-warmbrown'
@@ -226,18 +226,18 @@ export default function Checkout() {
           <aside className="space-y-6">
             <div className="rounded-[30px] border border-softwhite/8 bg-ink p-7 text-softwhite shadow-[0_24px_60px_rgba(17,17,16,0.14)]">
               <div className="text-[0.72rem] uppercase tracking-[0.24em] text-warmbrown-light">Order Summary</div>
-              <h2 className="mt-4 font-display text-[2.4rem] leading-none">{selectedPackage.name}</h2>
+              <h2 className="text-balance mt-4 font-display text-[2.1rem] leading-none sm:text-[2.4rem]">{selectedPackage.name}</h2>
               <div className="mt-4 text-[1.1rem] text-warmbrown-light">{selectedPackage.price}</div>
               <p className="mt-5 text-[0.96rem] leading-8 text-softwhite/68">{selectedPackage.who}</p>
 
               <div className="mt-8 grid gap-4 rounded-[24px] border border-softwhite/10 bg-softwhite/6 p-5">
-                <div className="flex items-center justify-between gap-4">
+                <div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
                   <span className="text-[0.72rem] uppercase tracking-[0.18em] text-softwhite/55">Estimated project total</span>
-                  <span className="font-display text-[2rem] text-softwhite">{formatCurrencyRange(pricing.estimatedRange)}</span>
+                  <span className="text-balance font-display text-[1.8rem] text-softwhite sm:text-[2rem]">{formatCurrencyRange(pricing.estimatedRange)}</span>
                 </div>
-                <div className="flex items-center justify-between gap-4 border-t border-softwhite/10 pt-4">
+                <div className="flex flex-col items-start gap-2 border-t border-softwhite/10 pt-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
                   <span className="text-[0.72rem] uppercase tracking-[0.18em] text-softwhite/55">Pay today</span>
-                  <span className="font-display text-[2rem] text-warmbrown-light">{formatCurrency(pricing.amountDueToday)}</span>
+                  <span className="font-display text-[1.8rem] text-warmbrown-light sm:text-[2rem]">{formatCurrency(pricing.amountDueToday)}</span>
                 </div>
                 <div className="text-sm leading-7 text-softwhite/60">
                   Checkout secures your project with a 50% deposit today. The remaining 50% is due on completion once the final website has been approved.
