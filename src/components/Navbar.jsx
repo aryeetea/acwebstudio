@@ -27,7 +27,7 @@ export default function Navbar() {
               <div className="rounded-[18px] border border-warmbrown/10 bg-softwhite/90 px-2.5 py-2 shadow-[0_14px_30px_rgba(17,17,16,0.05)] sm:px-3">
                 <img src="/logo-ace-main.png" alt="ACE Web Studio" className="h-9 w-auto sm:h-11" />
               </div>
-              <div className="hidden min-w-0 lg:block">
+              <div className="hidden min-w-0 xl:block">
                 <div className="text-[0.65rem] uppercase tracking-[0.26em] text-warmbrown">ACE Web Studio</div>
                 <div className="mt-1 text-sm text-ink/60">Custom websites for modern brands</div>
               </div>
