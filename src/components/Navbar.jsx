@@ -27,14 +27,14 @@ export default function Navbar() {
               <div className="rounded-[18px] border border-warmbrown/10 bg-softwhite/90 px-2.5 py-2 shadow-[0_14px_30px_rgba(17,17,16,0.05)] sm:px-3">
                 <img src="/logo-ace-main.png" alt="ACE Web Studio" className="h-9 w-auto sm:h-11" />
               </div>
-              <div className="hidden min-w-0 sm:block">
+              <div className="hidden min-w-0 lg:block">
                 <div className="text-[0.65rem] uppercase tracking-[0.26em] text-warmbrown">ACE Web Studio</div>
                 <div className="mt-1 text-sm text-ink/60">Custom websites for modern brands</div>
               </div>
             </div>
           </Link>
 
-          <div className="hidden items-center gap-8 md:flex">
+          <div className="hidden min-w-0 flex-1 items-center justify-end gap-2 lg:gap-3 xl:gap-5 md:flex">
             {links.map(link => {
               const active = pathname === link.to
 
@@ -42,7 +42,7 @@ export default function Navbar() {
                 <Link
                   key={link.to}
                   to={link.to}
-                  className={`rounded-full px-4 py-2 text-sm tracking-[0.14em] uppercase transition-all ${
+                  className={`rounded-full px-2.5 py-2 text-[0.68rem] tracking-[0.12em] uppercase transition-all lg:px-3 xl:px-4 xl:text-sm xl:tracking-[0.14em] ${
                     active
                       ? 'bg-ink text-softwhite shadow-[0_12px_24px_rgba(23,20,17,0.18)]'
                       : 'text-ink/55 hover:bg-warmbrown-pale/40 hover:text-ink'
@@ -54,7 +54,7 @@ export default function Navbar() {
             })}
             <Link
               to="/checkout"
-              className="rounded-full border border-warmbrown/20 bg-warmbrown px-5 py-3 text-[0.72rem] font-medium uppercase tracking-[0.2em] text-softwhite transition hover:-translate-y-0.5 hover:bg-ink"
+              className="ml-1 rounded-full border border-warmbrown/20 bg-warmbrown px-4 py-3 text-[0.68rem] font-medium uppercase tracking-[0.16em] whitespace-nowrap text-softwhite transition hover:-translate-y-0.5 hover:bg-ink lg:ml-2 lg:px-5 lg:text-[0.72rem] lg:tracking-[0.2em]"
             >
               Start Project
             </Link>
