@@ -1,10 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import FaqAccordion from '../components/FaqAccordion'
-import PortfolioShowcase from '../components/PortfolioShowcase'
 import SectionIntro from '../components/SectionIntro'
 import { faqs } from '../data/faqs'
-import { fetchPortfolioProjects } from '../lib/api'
 
 const services = [
   {
@@ -30,36 +28,6 @@ const services = [
 
 export default function Home() {
   const [openFaq, setOpenFaq] = useState(0)
-  const [portfolioProjects, setPortfolioProjects] = useState([])
-  const [portfolioLoading, setPortfolioLoading] = useState(true)
-
-  useEffect(() => {
-    let cancelled = false
-
-    async function loadPortfolioProjects() {
-      try {
-        const items = await fetchPortfolioProjects()
-
-        if (!cancelled) {
-          setPortfolioProjects(items.slice(0, 3))
-        }
-      } catch {
-        if (!cancelled) {
-          setPortfolioProjects([])
-        }
-      } finally {
-        if (!cancelled) {
-          setPortfolioLoading(false)
-        }
-      }
-    }
-
-    loadPortfolioProjects()
-
-    return () => {
-      cancelled = true
-    }
-  }, [])
 
   return (
     <>
@@ -195,23 +163,6 @@ export default function Home() {
                 </Link>
               </article>
             ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-softwhite px-4 py-20 sm:px-6 sm:py-24">
-        <div className="mx-auto max-w-6xl">
-          <SectionIntro
-            label="Selected Work"
-            title="Recent client work, built from the ground up."
-            copy="Every project is designed and coded from scratch — no templates, no shortcuts. Clean, custom work that represents the business behind it."
-          />
-
-          <div className="mt-14">
-            <PortfolioShowcase
-              projects={portfolioProjects}
-              loading={portfolioLoading}
-            />
           </div>
         </div>
       </section>

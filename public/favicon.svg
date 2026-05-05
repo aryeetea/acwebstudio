@@ -1,8 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
-  <rect width="64" height="64" rx="14" fill="#FAF6F0"/>
-  <path d="M13 48L28 15L43 48" stroke="#171110" stroke-width="4.5" stroke-linecap="square" stroke-linejoin="miter"/>
-  <path d="M16 48L30.5 17" stroke="#171110" stroke-width="4.5" stroke-linecap="square"/>
-  <path d="M40 20H54" stroke="#C79657" stroke-width="4.5" stroke-linecap="square"/>
-  <path d="M40 32H54" stroke="#C79657" stroke-width="4.5" stroke-linecap="square"/>
-  <path d="M40 44H54" stroke="#C79657" stroke-width="4.5" stroke-linecap="square"/>
+  <rect width="64" height="64" rx="16" fill="#F7F1E8"/>
+  <circle cx="23" cy="31" r="15" fill="#2A2521"/>
+  <circle cx="33" cy="31" r="15" fill="#6F5D4B" fill-opacity="0.78"/>
+  <circle cx="43" cy="31" r="15" fill="#D8CABB" fill-opacity="0.92"/>
+  <text x="19.4" y="35.4" fill="#FFFDF9" font-family="DM Sans, Arial, sans-serif" font-size="8.8" font-weight="500">A</text>
+  <text x="30.1" y="35.4" fill="#FFFDF9" font-family="DM Sans, Arial, sans-serif" font-size="8.8" font-weight="500">C</text>
+  <text x="40.7" y="35.4" fill="#FFFDF9" font-family="DM Sans, Arial, sans-serif" font-size="8.8" font-weight="500">E</text>
 </svg>
