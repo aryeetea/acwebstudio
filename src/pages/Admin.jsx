@@ -608,7 +608,12 @@ export default function Admin() {
                               <div className="rounded-[4px] border border-warmbrown-pale bg-softwhite px-4 py-4">
                                 <div className="text-[0.68rem] uppercase tracking-[0.16em] text-ink/48">Deposit paid online</div>
                                 <div className="mt-2 text-[1rem] text-ink">{formatCurrency(order.amountDueNow)}</div>
-                                <div className="mt-1 text-sm text-ink/55">Session: {order.stripeSessionId || 'Not available'}</div>
+                                <div className="mt-1 text-sm text-ink/55">
+                                  <span>Session: </span>
+                                  <span className="break-all font-mono text-[0.78rem]">
+                                    {order.stripeSessionId || 'Not available'}
+                                  </span>
+                                </div>
                               </div>
                             </div>
 
