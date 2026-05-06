@@ -822,12 +822,14 @@ app.post('/api/orders/confirm', async (req, res) => {
       return res.status(404).json({ error: 'That order session could not be found.' })
     }
 
-    const nextStatus = session.payment_status === 'paid' ? 'paid' : 'payment_pending'
-    const updatePayload = {
-      status: nextStatus,
+    const paymentWasCompleted = session.payment_status === 'paid'
+    const updatePayload = {}
+
+    if (paymentWasCompleted && existingOrder.status === 'payment_pending') {
+      updatePayload.status = 'paid'
     }
 
-    if (session.payment_status === 'paid' && !existingOrder.submitted_email_sent_at) {
+    if (paymentWasCompleted && !existingOrder.submitted_email_sent_at) {
       let companyEmailSent = false
       let customerEmailSent = false
 
@@ -843,20 +845,26 @@ app.post('/api/orders/confirm', async (req, res) => {
       }
     }
 
-    const { data, error } = await supabase
-      .from('orders')
-      .update(updatePayload)
-      .eq('stripe_session_id', session.id)
-      .select()
-      .single()
+    let orderRecord = existingOrder
 
-    if (error) {
-      throw new Error(error.message)
+    if (Object.keys(updatePayload).length > 0) {
+      const { data, error } = await supabase
+        .from('orders')
+        .update(updatePayload)
+        .eq('stripe_session_id', session.id)
+        .select()
+        .single()
+
+      if (error) {
+        throw new Error(error.message)
+      }
+
+      orderRecord = data
     }
 
     res.json({
-      ...mapOrderRow(data),
-      status: data.status || nextStatus,
+      ...mapOrderRow(orderRecord),
+      status: orderRecord.status || (paymentWasCompleted ? 'paid' : 'payment_pending'),
       paymentStatus: session.payment_status,
     })
   } catch (error) {
@@ -879,6 +887,10 @@ app.patch('/api/admin/orders/:id/status', requireAdmin, async (req, res) => {
 
     if (!existingOrder) {
       return res.status(404).json({ error: 'Order not found.' })
+    }
+
+    if (nextStatus === 'accepted' && existingOrder.status !== 'paid') {
+      return res.status(400).json({ error: 'Only paid orders can be accepted.' })
     }
 
     const updatePayload = {

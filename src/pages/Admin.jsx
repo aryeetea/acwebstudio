@@ -76,6 +76,10 @@ function getOrderStatusClasses(status) {
   }
 }
 
+function canAcceptOrder(order) {
+  return order.status === 'paid'
+}
+
 function getAdminConfigMessage() {
   if (typeof window !== 'undefined' && !/^(localhost|127\.0\.0\.1)$/i.test(window.location.hostname)) {
     return 'Admin access is not configured on the deployed server yet. Add `ADMIN_ACCESS_CODE` in your hosting dashboard, then redeploy.'
@@ -638,10 +642,16 @@ export default function Admin() {
                               <button
                                 type="button"
                                 onClick={() => handleOrderDecision(order.id, 'accepted')}
-                                disabled={updatingOrderId === order.id || order.status === 'accepted'}
+                                disabled={updatingOrderId === order.id || order.status === 'accepted' || !canAcceptOrder(order)}
                                 className="rounded-full bg-ink px-5 py-3 text-[0.7rem] font-medium uppercase tracking-[0.18em] text-softwhite transition hover:bg-warmbrown disabled:cursor-not-allowed disabled:opacity-60"
                               >
-                                {updatingOrderId === order.id ? 'Updating...' : order.status === 'accepted' ? 'Accepted' : 'Accept Order'}
+                                {updatingOrderId === order.id
+                                  ? 'Updating...'
+                                  : order.status === 'accepted'
+                                    ? 'Accepted'
+                                    : !canAcceptOrder(order)
+                                      ? 'Payment Required'
+                                      : 'Accept Order'}
                               </button>
                               <button
                                 type="button"
@@ -652,6 +662,11 @@ export default function Admin() {
                                 {updatingOrderId === order.id ? 'Updating...' : order.status === 'declined' ? 'Declined' : 'Decline Order'}
                               </button>
                             </div>
+                            {!canAcceptOrder(order) && order.status !== 'accepted' && order.status !== 'declined' && (
+                              <p className="mt-3 text-sm text-amber-800">
+                                This order can only be accepted after the Stripe deposit is paid.
+                              </p>
+                            )}
                           </div>
                         </div>
                       </article>
