@@ -446,3 +446,26 @@ export async function updateAdminOrderStatus(id, status, token) {
 
   return payload
 }
+
+export async function deleteAdminOrder(id, token) {
+  let response
+
+  try {
+    response = await fetchWithSameOriginFallback(`/api/admin/orders/${id}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+  } catch {
+    throw new Error(getNetworkErrorMessage('Could not remove this order.'))
+  }
+
+  const payload = await readJson(response)
+
+  if (!response.ok) {
+    throw new Error(getFriendlyErrorMessage(payload, 'Could not remove this order right now.'))
+  }
+
+  return payload
+}

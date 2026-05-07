@@ -361,6 +361,10 @@ function formatAddonList(addons = []) {
   return addons.map(addon => `${addon.label}${addon.price ? ` (${addon.price})` : ''}`).join(', ')
 }
 
+function getReopenedStatus(order) {
+  return order.submitted_email_sent_at ? 'paid' : 'payment_pending'
+}
+
 async function sendEmail({ to, subject, text }) {
   if (!canSendEmail()) {
     return false
@@ -933,7 +937,7 @@ app.patch('/api/admin/orders/:id/status', requireAdmin, async (req, res) => {
     ensureSupabase()
 
     const nextStatus = req.body.status?.trim()
-    const allowedStatuses = new Set(['accepted', 'declined'])
+    const allowedStatuses = new Set(['accepted', 'declined', 'reopened'])
 
     if (!allowedStatuses.has(nextStatus)) {
       return res.status(400).json({ error: 'A valid order decision is required.' })
@@ -950,10 +954,10 @@ app.patch('/api/admin/orders/:id/status', requireAdmin, async (req, res) => {
     }
 
     const updatePayload = {
-      status: nextStatus,
+      status: nextStatus === 'reopened' ? getReopenedStatus(existingOrder) : nextStatus,
     }
 
-    const shouldNotifyCustomer = existingOrder.customer_notified_status !== nextStatus
+    const shouldNotifyCustomer = nextStatus !== 'reopened' && existingOrder.customer_notified_status !== nextStatus
 
     if (shouldNotifyCustomer) {
       try {
@@ -982,6 +986,31 @@ app.patch('/api/admin/orders/:id/status', requireAdmin, async (req, res) => {
     res.json(mapOrderRow(data))
   } catch (error) {
     res.status(500).json({ error: error.message || 'Could not update this order.' })
+  }
+})
+
+app.delete('/api/admin/orders/:id', requireAdmin, async (req, res) => {
+  try {
+    ensureSupabase()
+
+    const existingOrder = await findOrderById(req.params.id)
+
+    if (!existingOrder) {
+      return res.status(404).json({ error: 'Order not found.' })
+    }
+
+    const { error } = await supabase
+      .from('orders')
+      .delete()
+      .eq('id', req.params.id)
+
+    if (error) {
+      throw new Error(error.message)
+    }
+
+    res.json({ success: true })
+  } catch (error) {
+    res.status(500).json({ error: error.message || 'Could not remove this order.' })
   }
 })
 

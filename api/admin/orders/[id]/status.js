@@ -19,6 +19,10 @@ function getRouteId(req) {
   return typeof value === 'string' ? value : ''
 }
 
+function getReopenedStatus(order) {
+  return order.submitted_email_sent_at ? 'paid' : 'payment_pending'
+}
+
 export default async function handler(req, res) {
   const session = requireAdmin(req, res)
 
@@ -39,7 +43,7 @@ export default async function handler(req, res) {
   try {
     const body = readRequestBody(req)
     const nextStatus = typeof body.status === 'string' ? body.status.trim() : ''
-    const allowedStatuses = new Set(['accepted', 'declined'])
+    const allowedStatuses = new Set(['accepted', 'declined', 'reopened'])
 
     if (!allowedStatuses.has(nextStatus)) {
       return json(res, 400, { error: 'A valid order decision is required.' })
@@ -56,10 +60,10 @@ export default async function handler(req, res) {
     }
 
     const updatePayload = {
-      status: nextStatus,
+      status: nextStatus === 'reopened' ? getReopenedStatus(existingOrder) : nextStatus,
     }
 
-    const shouldNotifyCustomer = existingOrder.customer_notified_status !== nextStatus
+    const shouldNotifyCustomer = nextStatus !== 'reopened' && existingOrder.customer_notified_status !== nextStatus
 
     if (shouldNotifyCustomer) {
       try {

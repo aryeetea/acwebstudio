@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import {
   createPortfolioProject,
+  deleteAdminOrder,
   deletePortfolioProject,
   fetchAdminContactInquiries,
   fetchAdminOrders,
@@ -78,6 +79,10 @@ function getOrderStatusClasses(status) {
 
 function canAcceptOrder(order) {
   return order.status === 'paid'
+}
+
+function canReopenOrder(order) {
+  return order.status === 'declined'
 }
 
 function getAdminConfigMessage() {
@@ -282,10 +287,33 @@ export default function Admin() {
       setMessage(
         status === 'accepted'
           ? 'Order accepted and customer notified.'
-          : 'Order declined and customer notified.'
+          : status === 'declined'
+            ? 'Order declined and customer notified.'
+            : 'Order moved back into review.'
       )
     } catch (updateError) {
       setError(updateError.message)
+    } finally {
+      setUpdatingOrderId('')
+    }
+  }
+
+  async function handleDeleteOrder(id) {
+    if (!window.confirm('Delete this order permanently? This cannot be undone.')) {
+      return
+    }
+
+    setUpdatingOrderId(id)
+    setError('')
+    setMessage('')
+    setOrdersError('')
+
+    try {
+      await deleteAdminOrder(id, token)
+      setOrders(current => current.filter(order => order.id !== id))
+      setMessage('Order deleted.')
+    } catch (deleteError) {
+      setError(deleteError.message)
     } finally {
       setUpdatingOrderId('')
     }
@@ -665,6 +693,22 @@ export default function Admin() {
                                 className="rounded-full border border-red-200 px-5 py-3 text-[0.7rem] font-medium uppercase tracking-[0.18em] text-red-700 transition hover:border-red-400 hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-60"
                               >
                                 {updatingOrderId === order.id ? 'Updating...' : order.status === 'declined' ? 'Declined' : 'Decline Order'}
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => handleOrderDecision(order.id, 'reopened')}
+                                disabled={updatingOrderId === order.id || !canReopenOrder(order)}
+                                className="rounded-full border border-warmbrown-pale px-5 py-3 text-[0.7rem] font-medium uppercase tracking-[0.18em] text-ink/75 transition hover:border-warmbrown hover:bg-softwhite disabled:cursor-not-allowed disabled:opacity-60"
+                              >
+                                {updatingOrderId === order.id ? 'Updating...' : 'Pick Back Up'}
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => handleDeleteOrder(order.id)}
+                                disabled={updatingOrderId === order.id}
+                                className="rounded-full border border-red-200 px-5 py-3 text-[0.7rem] font-medium uppercase tracking-[0.18em] text-red-700 transition hover:border-red-400 hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-60"
+                              >
+                                {updatingOrderId === order.id ? 'Updating...' : 'Delete Order'}
                               </button>
                             </div>
                             {!canAcceptOrder(order) && order.status !== 'accepted' && order.status !== 'declined' && (
