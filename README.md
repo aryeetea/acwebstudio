@@ -30,6 +30,7 @@ SUPABASE_URL=https://ugedvhmgjbxmrinjwyep.supabase.co
 SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 ADMIN_TOKEN_SECRET=change-this-in-production
 STRIPE_SECRET_KEY=sk_test_or_sk_live_key_here
+STRIPE_WEBHOOK_SECRET=whsec_your_stripe_webhook_secret
 SITE_URL=http://localhost:5173
 ORDER_NOTIFICATION_EMAIL=webstudioace@outlook.com
 EMAILJS_SERVICE_ID=your_emailjs_service_id
@@ -42,6 +43,7 @@ VITE_EMAILJS_PUBLIC_KEY=your_emailjs_public_key
 ```
 
 This is a Vite app, so use `VITE_...` names for frontend values instead of `NEXT_PUBLIC_...`.
+Set your Stripe webhook endpoint to `/api/stripe/webhook` so paid checkout events still mark orders as paid and send alert emails even if the customer never reaches the success page.
 
 ## SQL setup
 

@@ -12,6 +12,7 @@ import {
   EMAILJS_TEMPLATE_ID,
   ORDER_NOTIFICATION_EMAIL,
   PACKAGE_TYPE_OPTIONS,
+  STRIPE_WEBHOOK_SECRET,
   STRIPE_CURRENCY,
   ensureStripe,
   ensureSupabase,
@@ -33,6 +34,40 @@ const TOKEN_TTL_MS = 1000 * 60 * 60 * 12
 const PACKAGE_OPTIONS = new Set(PACKAGE_TYPE_OPTIONS)
 
 app.use(cors())
+app.post('/api/stripe/webhook', express.raw({ type: 'application/json' }), async (req, res) => {
+  try {
+    ensureStripe()
+
+    if (!STRIPE_WEBHOOK_SECRET) {
+      throw new Error('Stripe webhook is not configured. Add STRIPE_WEBHOOK_SECRET to the API environment.')
+    }
+
+    const signature = req.headers['stripe-signature']
+
+    if (!signature) {
+      return res.status(400).json({ error: 'Missing Stripe signature.' })
+    }
+
+    const event = stripe.webhooks.constructEvent(req.body, signature, STRIPE_WEBHOOK_SECRET)
+
+    if (event.type === 'checkout.session.completed' || event.type === 'checkout.session.async_payment_succeeded') {
+      const session = event.data.object
+      const orderRecord = await finalizeOrderPayment({
+        sessionId: session.id,
+        paymentStatus: session.payment_status || 'paid',
+      })
+
+      if (!orderRecord) {
+        console.warn(`Stripe webhook received for unknown order session ${session.id}.`)
+      }
+    }
+
+    res.json({ received: true })
+  } catch (error) {
+    const statusCode = error.type === 'StripeSignatureVerificationError' ? 400 : 500
+    res.status(statusCode).json({ error: error.message || 'Could not process Stripe webhook.' })
+  }
+})
 app.use(express.json({ limit: '2mb' }))
 
 function canSendEmail() {
@@ -165,6 +200,54 @@ async function findOrderBySessionId(sessionId) {
   return data
 }
 
+async function finalizeOrderPayment({ sessionId, paymentStatus }) {
+  const existingOrder = await findOrderBySessionId(sessionId)
+
+  if (!existingOrder) {
+    return null
+  }
+
+  const paymentWasCompleted = paymentStatus === 'paid'
+  const updatePayload = {}
+
+  if (paymentWasCompleted && existingOrder.status === 'payment_pending') {
+    updatePayload.status = 'paid'
+  }
+
+  if (paymentWasCompleted && !existingOrder.submitted_email_sent_at) {
+    let companyEmailSent = false
+    let customerEmailSent = false
+
+    try {
+      companyEmailSent = await notifyCompanyOfSubmittedOrder(existingOrder)
+      customerEmailSent = await notifyCustomerOfSubmittedOrder(existingOrder)
+    } catch (mailError) {
+      console.warn(`Order email notification failed for ${existingOrder.id}:`, mailError.message)
+    }
+
+    if (companyEmailSent || customerEmailSent) {
+      updatePayload.submitted_email_sent_at = new Date().toISOString()
+    }
+  }
+
+  if (!Object.keys(updatePayload).length) {
+    return existingOrder
+  }
+
+  const { data, error } = await supabase
+    .from('orders')
+    .update(updatePayload)
+    .eq('stripe_session_id', sessionId)
+    .select()
+    .single()
+
+  if (error) {
+    throw new Error(error.message)
+  }
+
+  return data
+}
+
 function getCheckoutOrderDetails(body = {}) {
   const packageSlug = typeof body.packageSlug === 'string' ? body.packageSlug.trim() : ''
   const selectedPackage = packageMap[packageSlug]
@@ -283,32 +366,42 @@ async function sendEmail({ to, subject, text }) {
     return false
   }
 
-  const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      service_id: EMAILJS_SERVICE_ID,
-      template_id: EMAILJS_TEMPLATE_ID,
-      user_id: EMAILJS_PUBLIC_KEY,
-      accessToken: EMAILJS_PRIVATE_KEY || undefined,
-      template_params: {
-        to_email: Array.isArray(to) ? to.join(',') : to,
-        subject,
-        message: text,
-        reply_to: ORDER_NOTIFICATION_EMAIL,
-        from_name: 'ACE Web Studio',
-      },
-    }),
-  })
+  const recipients = Array.isArray(to) ? to : [to]
+  const cleanedRecipients = recipients.map(email => String(email).trim()).filter(Boolean)
 
-  if (!response.ok) {
-    const payload = await response.text().catch(() => '')
-    throw new Error(payload || 'Could not send email through EmailJS.')
+  if (!cleanedRecipients.length) {
+    return false
   }
+  const results = await Promise.all(cleanedRecipients.map(async recipient => {
+    const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        service_id: EMAILJS_SERVICE_ID,
+        template_id: EMAILJS_TEMPLATE_ID,
+        user_id: EMAILJS_PUBLIC_KEY,
+        accessToken: EMAILJS_PRIVATE_KEY || undefined,
+        template_params: {
+          to_email: recipient,
+          subject,
+          message: text,
+          reply_to: ORDER_NOTIFICATION_EMAIL,
+          from_name: 'ACE Web Studio',
+        },
+      }),
+    })
 
-  return true
+    if (!response.ok) {
+      const payload = await response.text().catch(() => '')
+      throw new Error(payload || `Could not send email through EmailJS to ${recipient}.`)
+    }
+
+    return true
+  }))
+
+  return results.every(Boolean)
 }
 
 async function notifyCompanyOfSubmittedOrder(order) {
@@ -816,55 +909,18 @@ app.post('/api/orders/confirm', async (req, res) => {
     }
 
     const session = await stripe.checkout.sessions.retrieve(sessionId)
-    const existingOrder = await findOrderBySessionId(session.id)
+    const orderRecord = await finalizeOrderPayment({
+      sessionId: session.id,
+      paymentStatus: session.payment_status,
+    })
 
-    if (!existingOrder) {
+    if (!orderRecord) {
       return res.status(404).json({ error: 'That order session could not be found.' })
-    }
-
-    const paymentWasCompleted = session.payment_status === 'paid'
-    const updatePayload = {}
-
-    if (paymentWasCompleted && existingOrder.status === 'payment_pending') {
-      updatePayload.status = 'paid'
-    }
-
-    if (paymentWasCompleted && !existingOrder.submitted_email_sent_at) {
-      let companyEmailSent = false
-      let customerEmailSent = false
-
-      try {
-        companyEmailSent = await notifyCompanyOfSubmittedOrder(existingOrder)
-        customerEmailSent = await notifyCustomerOfSubmittedOrder(existingOrder)
-      } catch (mailError) {
-        console.warn(`Order email notification failed for ${existingOrder.id}:`, mailError.message)
-      }
-
-      if (companyEmailSent || customerEmailSent) {
-        updatePayload.submitted_email_sent_at = new Date().toISOString()
-      }
-    }
-
-    let orderRecord = existingOrder
-
-    if (Object.keys(updatePayload).length > 0) {
-      const { data, error } = await supabase
-        .from('orders')
-        .update(updatePayload)
-        .eq('stripe_session_id', session.id)
-        .select()
-        .single()
-
-      if (error) {
-        throw new Error(error.message)
-      }
-
-      orderRecord = data
     }
 
     res.json({
       ...mapOrderRow(orderRecord),
-      status: orderRecord.status || (paymentWasCompleted ? 'paid' : 'payment_pending'),
+      status: orderRecord.status || (session.payment_status === 'paid' ? 'paid' : 'payment_pending'),
       paymentStatus: session.payment_status,
     })
   } catch (error) {

@@ -48,15 +48,6 @@ export default function Navbar() {
             })}
           </div>
 
-          <div className="hidden shrink-0 items-center lg:flex">
-            <Link
-              to="/checkout"
-              className="rounded-full border border-warmbrown/20 bg-warmbrown px-5 py-3 text-[0.68rem] font-medium uppercase tracking-[0.18em] whitespace-nowrap text-softwhite transition hover:-translate-y-0.5 hover:bg-ink xl:px-6 xl:text-[0.72rem] xl:tracking-[0.2em]"
-            >
-              Start Project
-            </Link>
-          </div>
-
           <button
             type="button"
             onClick={() => setOpen(current => !current)}
@@ -86,12 +77,6 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
-            <Link
-              to="/checkout"
-              className="rounded-[18px] bg-warmbrown px-4 py-3 text-center text-sm uppercase tracking-[0.14em] text-softwhite"
-            >
-              Start Project
-            </Link>
           </div>
         )}
       </nav>

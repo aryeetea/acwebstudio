@@ -14,6 +14,7 @@ export const EMAILJS_TEMPLATE_ID = process.env.EMAILJS_TEMPLATE_ID?.trim() || ''
 export const EMAILJS_PUBLIC_KEY = process.env.EMAILJS_PUBLIC_KEY?.trim() || ''
 export const EMAILJS_PRIVATE_KEY = process.env.EMAILJS_PRIVATE_KEY?.trim() || ''
 export const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY?.trim() || ''
+export const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET?.trim() || ''
 export const stripe = STRIPE_SECRET_KEY ? new Stripe(STRIPE_SECRET_KEY) : null
 
 export const PACKAGE_TYPE_OPTIONS = [...packages.map(pkg => pkg.name), 'Custom']
@@ -228,6 +229,56 @@ export async function findOrderBySessionId(sessionId) {
   return data
 }
 
+export async function finalizeOrderPayment({ sessionId, paymentStatus }) {
+  ensureSupabase()
+
+  const existingOrder = await findOrderBySessionId(sessionId)
+
+  if (!existingOrder) {
+    return null
+  }
+
+  const paymentWasCompleted = paymentStatus === 'paid'
+  const updatePayload = {}
+
+  if (paymentWasCompleted && existingOrder.status === 'payment_pending') {
+    updatePayload.status = 'paid'
+  }
+
+  if (paymentWasCompleted && !existingOrder.submitted_email_sent_at) {
+    let companyEmailSent = false
+    let customerEmailSent = false
+
+    try {
+      companyEmailSent = await notifyCompanyOfSubmittedOrder(existingOrder)
+      customerEmailSent = await notifyCustomerOfSubmittedOrder(existingOrder)
+    } catch (mailError) {
+      console.warn(`Order email notification failed for ${existingOrder.id}:`, mailError.message)
+    }
+
+    if (companyEmailSent || customerEmailSent) {
+      updatePayload.submitted_email_sent_at = new Date().toISOString()
+    }
+  }
+
+  if (!Object.keys(updatePayload).length) {
+    return existingOrder
+  }
+
+  const { data, error } = await supabase
+    .from('orders')
+    .update(updatePayload)
+    .eq('stripe_session_id', sessionId)
+    .select()
+    .single()
+
+  if (error) {
+    throw new Error(error.message)
+  }
+
+  return data
+}
+
 export function canSendEmail() {
   return Boolean(EMAILJS_SERVICE_ID && EMAILJS_TEMPLATE_ID && EMAILJS_PUBLIC_KEY)
 }
@@ -237,32 +288,42 @@ export async function sendEmail({ to, subject, text }) {
     return false
   }
 
-  const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      service_id: EMAILJS_SERVICE_ID,
-      template_id: EMAILJS_TEMPLATE_ID,
-      user_id: EMAILJS_PUBLIC_KEY,
-      accessToken: EMAILJS_PRIVATE_KEY || undefined,
-      template_params: {
-        to_email: Array.isArray(to) ? to.join(',') : to,
-        subject,
-        message: text,
-        reply_to: ORDER_NOTIFICATION_EMAIL,
-        from_name: 'ACE Web Studio',
-      },
-    }),
-  })
+  const recipients = Array.isArray(to) ? to : [to]
+  const cleanedRecipients = recipients.map(email => String(email).trim()).filter(Boolean)
 
-  if (!response.ok) {
-    const payload = await response.text().catch(() => '')
-    throw new Error(payload || 'Could not send email through EmailJS.')
+  if (!cleanedRecipients.length) {
+    return false
   }
+  const results = await Promise.all(cleanedRecipients.map(async recipient => {
+    const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        service_id: EMAILJS_SERVICE_ID,
+        template_id: EMAILJS_TEMPLATE_ID,
+        user_id: EMAILJS_PUBLIC_KEY,
+        accessToken: EMAILJS_PRIVATE_KEY || undefined,
+        template_params: {
+          to_email: recipient,
+          subject,
+          message: text,
+          reply_to: ORDER_NOTIFICATION_EMAIL,
+          from_name: 'ACE Web Studio',
+        },
+      }),
+    })
 
-  return true
+    if (!response.ok) {
+      const payload = await response.text().catch(() => '')
+      throw new Error(payload || `Could not send email through EmailJS to ${recipient}.`)
+    }
+
+    return true
+  }))
+
+  return results.every(Boolean)
 }
 
 export async function notifyCustomerOfDecision(order, nextStatus) {
